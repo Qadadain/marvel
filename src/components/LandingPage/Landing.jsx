@@ -17,8 +17,8 @@ const LogoText = styled.p`
   font-size: 12em;
   font-weight: 700;
   color: #ee171f;
-  animation: glow 2.5s ease-out infinite alternate;
-  animation-iteration-count: 2;
+  animation: glow 2.5s ease-in-out infinite alternate;
+  animation-iteration-count: 6;
   text-shadow: 1px 1px 1px #eeeeee, 1px 2px 1px #eeeeee, 1px 3px 1px #eeeeee,
     1px 4px 1px #eeeeee, 1px 5px 1px #eeeeee, 1px 6px 1px #eeeeee,
     1px 7px 1px #eeeeee, 1px 8px 1px #eeeeee, 1px 9px 1px #eeeeee,
