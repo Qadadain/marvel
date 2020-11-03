@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import styled from "styled-components";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import { API_URL, API_KEY } from "../../constants";
 
 import SearchBar from "./SearchBar/SearchBar";
-import ComicsList from "../Comics/ComicsList";
+import HeroesList from "../Heroes/HeroesList";
 
 import banner from "../assets/img/marvel-banner.png";
 
@@ -19,15 +20,28 @@ const SearchBarContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+const Loading = styled.div`
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+`;
+
+const SEARCHBAR_PLACEHOLDER = "Search from Marvel Universe...";
 
 const Home = () => {
   const [isLoading, setLoading] = useState(false);
-  const [comicsList, setComicsList] = useState([]);
+  const [heroesList, setHeroesList] = useState([]);
 
   useEffect(() => {
-    Axios.get(`${API_URL}&apikey=${API_KEY}`)
+    setLoading(true);
+    Axios.get(`${API_URL}?apikey=${API_KEY}`)
       .then((response) => response.data.data.results)
-      .then((data) => setComicsList(data));
+      .then((data) => {
+        setHeroesList(data);
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -36,9 +50,14 @@ const Home = () => {
         <img src={banner} alt="logo" />
       </BannerContainer>
       <SearchBarContainer>
-        <SearchBar />
+        <SearchBar placeholder={SEARCHBAR_PLACEHOLDER} />
       </SearchBarContainer>
-      <ComicsList list={comicsList} />
+      <HeroesList list={heroesList} />
+      {isLoading && (
+        <Loading>
+          <ClipLoader size={100} color={"#ee171f"} />
+        </Loading>
+      )}
     </div>
   );
 };

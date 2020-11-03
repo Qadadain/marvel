@@ -16,18 +16,11 @@ const InputSearch = styled.input`
   font-size: 16px;
 `;
 
-const SearchBar = ({ placeholder, onClickSearchBar }) => {
+const SearchBar = ({ placeholder }) => {
   return (
     <WrapperSearchBar>
       <InputSearch type="text" placeholder={placeholder} />
-      <SearchButton
-        onClick={() => {
-          console.log("à l'interieur du composant");
-          onClickSearchBar("chaine de charactere");
-        }}
-      >
-        SEARCH
-      </SearchButton>
+      <SearchButton>SEARCH</SearchButton>
     </WrapperSearchBar>
   );
 };
