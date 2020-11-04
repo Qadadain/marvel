@@ -9,7 +9,7 @@ import SearchBar from "./SearchBar/SearchBar";
 import HeroesList from "../Heroes/HeroesList";
 
 import banner from "../assets/img/marvel-banner.png";
-import ResultsHeroes from "../Heroes/ResultsHeroes";
+import HeroDetails from "../Heroes/HeroDetails";
 
 const BannerContainer = styled.div`
   display: flex;
@@ -62,7 +62,7 @@ const Home = () => {
 
   console.log("search value dans home", searchValue);
   return (
-    <div>
+    <>
       <BannerContainer>
         <img src={banner} alt="logo" />
       </BannerContainer>
@@ -72,8 +72,7 @@ const Home = () => {
           submitSearchValue={(value) => setSearchValue(value)}
         />
       </SearchBarContainer>
-      <HeroesList list={heroesList} results={searchValue} />
-      {searchValue && <ResultsHeroes list={heroesList} result={searchValue} />}
+
       {isLoading && (
         <>
           <Loading>
@@ -82,7 +81,17 @@ const Home = () => {
           <Loading>Loading...</Loading>
         </>
       )}
-    </div>
+
+      {searchValue && searchValue.length > 0 ? (
+        heroesList.map((hero_details) => {
+          return (
+            <HeroDetails hero_details={hero_details} value={searchValue} />
+          );
+        })
+      ) : (
+        <HeroesList list={heroesList} results={searchValue} />
+      )}
+    </>
   );
 };
 
