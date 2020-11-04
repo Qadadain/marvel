@@ -2,16 +2,17 @@ import React from "react";
 
 import styled from "styled-components";
 
-import Heroes from "./Heroes";
+import Hero from "./Hero";
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid green;
 `;
 const HeroesContainer = styled.div`
   margin-top: 10px;
-  width: 1000px;
+  width: 500px;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -23,7 +24,9 @@ const HeroesList = ({ list }) => {
   return (
     <Wrapper>
       <HeroesContainer>
-        <Heroes heroes={list} />
+        {list.map((hero) => (
+          <Hero key={hero.id} hero={hero} />
+        ))}
       </HeroesContainer>
     </Wrapper>
   );

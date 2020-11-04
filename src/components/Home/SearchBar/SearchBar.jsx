@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+// import ClipLoader from "react-spinners/ClipLoader";
+
 import SearchButton from "../../Button";
+import HeroesList from "../../Heroes/HeroesList";
 
 const WrapperSearchBar = styled.div`
   display: flex;
@@ -16,12 +19,37 @@ const InputSearch = styled.input`
   font-size: 16px;
 `;
 
-const SearchBar = ({ placeholder }) => {
+const SearchBar = ({ placeholder, list }) => {
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredHeroes, setFilteredHeroes] = useState([]);
+
+  // useEffect(() => {
+  //   setFilteredHeroes(
+  //     filteredHeroes.filter((hero) =>
+  //       hero.name.toLowerCase().includes(searchValue.toLowerCase())
+  //     )
+  //   );
+  // }, [searchValue, filteredHeroes]);
+
+  const submitSearchValue = () => {
+    return searchValue;
+  };
+
   return (
-    <WrapperSearchBar>
-      <InputSearch type="text" placeholder={placeholder} />
-      <SearchButton>SEARCH</SearchButton>
-    </WrapperSearchBar>
+    <>
+      <WrapperSearchBar>
+        <InputSearch
+          type="text"
+          placeholder={placeholder}
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+        {filteredHeroes.map((hero) => (
+          <HeroesList {...hero} />
+        ))}
+        <SearchButton onClick={submitSearchValue}>SEARCH</SearchButton>
+      </WrapperSearchBar>
+    </>
   );
 };
 

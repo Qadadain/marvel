@@ -41,6 +41,9 @@ const Home = () => {
       .then((data) => {
         setHeroesList(data);
         setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 
@@ -50,13 +53,16 @@ const Home = () => {
         <img src={banner} alt="logo" />
       </BannerContainer>
       <SearchBarContainer>
-        <SearchBar placeholder={SEARCHBAR_PLACEHOLDER} />
+        <SearchBar placeholder={SEARCHBAR_PLACEHOLDER} list={heroesList} />
       </SearchBarContainer>
       <HeroesList list={heroesList} />
       {isLoading && (
-        <Loading>
-          <ClipLoader size={100} color={"#ee171f"} />
-        </Loading>
+        <>
+          <Loading>
+            <ClipLoader size={100} color={"#ee171f"} />
+          </Loading>
+          <Loading>Loading...</Loading>
+        </>
       )}
     </div>
   );
