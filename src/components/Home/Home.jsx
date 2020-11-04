@@ -9,6 +9,7 @@ import SearchBar from "./SearchBar/SearchBar";
 import HeroesList from "../Heroes/HeroesList";
 
 import banner from "../assets/img/marvel-banner.png";
+import ResultsHeroes from "../Heroes/ResultsHeroes";
 
 const BannerContainer = styled.div`
   display: flex;
@@ -33,6 +34,8 @@ const SEARCHBAR_PLACEHOLDER = "Search from Marvel Universe...";
 const Home = () => {
   const [isLoading, setLoading] = useState(false);
   const [heroesList, setHeroesList] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredHeroes, setFilteredHeroes] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -45,17 +48,32 @@ const Home = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [searchValue]);
 
+  // setFilteredHeroes(
+  //   filteredHeroes.filter((hero) =>
+  //     hero.name.toLowerCase().includes(searchValue.toLowerCase())
+  //   )
+  // );
+
+  // const searchResults = searchValue.lenght ? searchValue.map((result) => {
+  //   return <div key={result.id}>{result.name}</div>
+  // })
+
+  console.log("search value dans home", searchValue);
   return (
     <div>
       <BannerContainer>
         <img src={banner} alt="logo" />
       </BannerContainer>
       <SearchBarContainer>
-        <SearchBar placeholder={SEARCHBAR_PLACEHOLDER} list={heroesList} />
+        <SearchBar
+          placeholder={SEARCHBAR_PLACEHOLDER}
+          submitSearchValue={(value) => setSearchValue(value)}
+        />
       </SearchBarContainer>
-      <HeroesList list={heroesList} />
+      <HeroesList list={heroesList} results={searchValue} />
+      {searchValue && <ResultsHeroes list={heroesList} result={searchValue} />}
       {isLoading && (
         <>
           <Loading>

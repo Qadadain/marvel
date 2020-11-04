@@ -19,21 +19,8 @@ const InputSearch = styled.input`
   font-size: 16px;
 `;
 
-const SearchBar = ({ placeholder, list }) => {
+const SearchBar = ({ placeholder, submitSearchValue }) => {
   const [searchValue, setSearchValue] = useState("");
-  const [filteredHeroes, setFilteredHeroes] = useState([]);
-
-  // useEffect(() => {
-  //   setFilteredHeroes(
-  //     filteredHeroes.filter((hero) =>
-  //       hero.name.toLowerCase().includes(searchValue.toLowerCase())
-  //     )
-  //   );
-  // }, [searchValue, filteredHeroes]);
-
-  const submitSearchValue = () => {
-    return searchValue;
-  };
 
   return (
     <>
@@ -44,10 +31,7 @@ const SearchBar = ({ placeholder, list }) => {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
-        {filteredHeroes.map((hero) => (
-          <HeroesList {...hero} />
-        ))}
-        <SearchButton onClick={submitSearchValue}>SEARCH</SearchButton>
+        <SearchButton onClick={() => submitSearchValue(searchValue)}>SEARCH</SearchButton>
       </WrapperSearchBar>
     </>
   );
