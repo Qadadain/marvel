@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-// import ClipLoader from "react-spinners/ClipLoader";
 
 import SearchButton from "../../Button";
-import HeroesList from "../../Heroes/HeroesList";
 
 const WrapperSearchBar = styled.div`
   display: flex;
@@ -31,7 +29,9 @@ const SearchBar = ({ placeholder, submitSearchValue }) => {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
-        <SearchButton onClick={() => submitSearchValue(searchValue)}>SEARCH</SearchButton>
+        <SearchButton onClick={() => submitSearchValue(searchValue)}>
+          SEARCH
+        </SearchButton>
       </WrapperSearchBar>
     </>
   );

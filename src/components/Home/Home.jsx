@@ -7,9 +7,9 @@ import { API_URL, API_KEY } from "../../constants";
 
 import SearchBar from "./SearchBar/SearchBar";
 import HeroesList from "../Heroes/HeroesList";
+import HeroDetails from "../Heroes/HeroDetails";
 
 import banner from "../assets/img/marvel-banner.png";
-import HeroDetails from "../Heroes/HeroDetails";
 
 const BannerContainer = styled.div`
   display: flex;
@@ -34,8 +34,9 @@ const SEARCHBAR_PLACEHOLDER = "Search from Marvel Universe...";
 const Home = () => {
   const [isLoading, setLoading] = useState(false);
   const [heroesList, setHeroesList] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
   const [filteredHeroes, setFilteredHeroes] = useState([]);
+  const [getNextHeroList, setNextHeroList] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -44,11 +45,33 @@ const Home = () => {
       .then((data) => {
         setHeroesList(data);
         setLoading(false);
+        getNextHeroList(data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [searchValue]);
+  }, [searchValue, getNextHeroList]);
+
+  const getNextHero = () => {
+    const index = heroesList.length++;
+    setNextHeroList(index);
+  };
+
+  const searchHero = (hero) => {
+    if (hero.name === searchValue) {
+      return <HeroesList hero={hero.id} />;
+    }
+  };
+
+  const handleSelectHero = (id) => {
+    console.log("id", id);
+    selectHeroById(id);
+  };
+
+  const selectHeroById = (id) => {
+    const heroesArray = heroesList.filter((hero) => hero.id !== id);
+    setFilteredHeroes(heroesArray);
+  };
 
   // setFilteredHeroes(
   //   filteredHeroes.filter((hero) =>
@@ -61,6 +84,12 @@ const Home = () => {
   // })
 
   console.log("search value dans home", searchValue);
+
+  const currentIndex =
+    getNextHeroList !== null ? heroesList[getNextHeroList] : null;
+
+  console.log("current index", currentIndex);
+
   return (
     <>
       <BannerContainer>
@@ -81,7 +110,6 @@ const Home = () => {
           <Loading>Loading...</Loading>
         </>
       )}
-
       {searchValue && searchValue.length > 0 ? (
         heroesList.map((hero_details) => {
           return (
@@ -89,7 +117,17 @@ const Home = () => {
           );
         })
       ) : (
-        <HeroesList list={heroesList} results={searchValue} />
+        <>
+          <HeroesList
+            list={heroesList}
+            results={searchValue}
+            handleSelectHeroById={(id) => handleSelectHero(id)}
+          />
+          {currentIndex}
+          <button style={{ color: "white" }} onClick={() => getNextHero()}>
+            NEXTTTTTTT
+          </button>
+        </>
       )}
     </>
   );

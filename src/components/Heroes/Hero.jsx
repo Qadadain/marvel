@@ -62,10 +62,11 @@ const HeroContainer = styled.div`
   }
 `;
 
+
 const Hero = ({ hero }) => {
   console.log("heroes", hero);
   return (
-    <HeroContainer key={hero.id}>
+    <HeroContainer key={hero.id} >
       <TooltipText>{hero.name}</TooltipText>
       <TooltipBox>{hero.description}</TooltipBox>
       <img src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)} alt="images" />
