@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import styled from "styled-components";
 import ClipLoader from "react-spinners/ClipLoader";
