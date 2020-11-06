@@ -7,7 +7,6 @@ import { API_URL, API_KEY } from "../../constants";
 
 import SearchBar from "./SearchBar/SearchBar";
 import HeroesList from "../Heroes/HeroesList";
-import HeroDetails from "../Heroes/HeroDetails";
 
 import banner from "../assets/img/marvel-banner.png";
 
@@ -35,60 +34,54 @@ const Home = () => {
   const [isLoading, setLoading] = useState(false);
   const [heroesList, setHeroesList] = useState([]);
   const [filteredHeroes, setFilteredHeroes] = useState([]);
-  const [getNextHeroList, setNextHeroList] = useState(null);
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     setLoading(true);
-    Axios.get(`${API_URL}?apikey=${API_KEY}`)
+    Axios.get(`${API_URL}?&apikey=${API_KEY}`)
       .then((response) => response.data.data.results)
       .then((data) => {
         setHeroesList(data);
         setLoading(false);
-        getNextHeroList(data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [searchValue, getNextHeroList]);
+  }, [searchValue]);
 
-  const getNextHero = () => {
-    const index = heroesList.length++;
-    setNextHeroList(index);
-  };
+  // useEffect(() => {
+  //   setLoading(true);
+  //   Axios.get(`${API_URL}?name=${searchValue}&apikey=${API_KEY}`)
+  //     .then((response) => response.data.data.results)
+  //     .then((data) => {
+  //       setHeroesList(data);
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [searchValue]);
 
-  const searchHero = (hero) => {
-    if (hero.name === searchValue) {
-      return <HeroesList hero={hero.id} />;
-    }
-  };
-
-  const handleSelectHero = (id) => {
-    console.log("id", id);
-    selectHeroById(id);
-  };
-
-  const selectHeroById = (id) => {
-    const heroesArray = heroesList.filter((hero) => hero.id !== id);
-    setFilteredHeroes(heroesArray);
-  };
-
-  // setFilteredHeroes(
-  //   filteredHeroes.filter((hero) =>
-  //     hero.name.toLowerCase().includes(searchValue.toLowerCase())
-  //   )
+  // const searchResultsFiltered = heroesList.filter((hero) =>
+  //   hero.name.toLowerCase().includes(searchValue.toLowerCase())
   // );
+  // console.log("searchResultFiltered", searchResultsFiltered);
+  // console.log("searchvalue dans home", searchValue);
 
-  // const searchResults = searchValue.lenght ? searchValue.map((result) => {
-  //   return <div key={result.id}>{result.name}</div>
-  // })
+  // const searchResultsFiltered = heroesList.filter((hero) => {
+  //   console.log({
+  //     search: searchValue.toLowerCase(),
+  //     value: hero.name.toLowerCase(),
+  //   });
 
-  console.log("search value dans home", searchValue);
+  //   console.log({
+  //     search: searchValue.toLowerCase(),
+  //     value: hero.name.toLowerCase(),
+  //     result: hero.name.toLowerCase().includes(searchValue.toLowerCase()),
+  //   });
 
-  const currentIndex =
-    getNextHeroList !== null ? heroesList[getNextHeroList] : null;
-
-  console.log("current index", currentIndex);
+  //   return hero.name.toLowerCase().includes(searchValue.toLowerCase);
+  // });
 
   return (
     <>
@@ -102,32 +95,15 @@ const Home = () => {
         />
       </SearchBarContainer>
 
-      {isLoading && (
+      {isLoading ? (
         <>
           <Loading>
             <ClipLoader size={100} color={"#ee171f"} />
           </Loading>
           <Loading>Loading...</Loading>
         </>
-      )}
-      {searchValue && searchValue.length > 0 ? (
-        heroesList.map((hero_details) => {
-          return (
-            <HeroDetails hero_details={hero_details} value={searchValue} />
-          );
-        })
       ) : (
-        <>
-          <HeroesList
-            list={heroesList}
-            results={searchValue}
-            handleSelectHeroById={(id) => handleSelectHero(id)}
-          />
-          {currentIndex}
-          <button style={{ color: "white" }} onClick={() => getNextHero()}>
-            NEXTTTTTTT
-          </button>
-        </>
+        <HeroesList list={heroesList} />
       )}
     </>
   );
