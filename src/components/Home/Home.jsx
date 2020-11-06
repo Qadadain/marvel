@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Axios from "axios";
 import styled from "styled-components";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -47,20 +47,21 @@ const Home = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [searchValue]);
+  }, []);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   Axios.get(`${API_URL}?name=${searchValue}&apikey=${API_KEY}`)
-  //     .then((response) => response.data.data.results)
-  //     .then((data) => {
-  //       setHeroesList(data);
-  //       setLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [searchValue]);
+  const searchRequest = () => {
+    setLoading(true);
+    Axios.get(`${API_URL}?name=${searchValue}&apikey=${API_KEY}`)
+      .then((response) => response.data.data.results)
+      .then((data) => {
+        setFilteredHeroes(data);
+        setLoading(false);
+        console.log("setHeroesList dans searchRequest", data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   // const searchResultsFiltered = heroesList.filter((hero) =>
   //   hero.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -92,17 +93,24 @@ const Home = () => {
         <SearchBar
           placeholder={SEARCHBAR_PLACEHOLDER}
           submitSearchValue={(value) => setSearchValue(value)}
+          searchRequest={(value) => searchRequest(value)}
         />
       </SearchBarContainer>
 
-      {isLoading ? (
+      {isLoading && (
         <>
           <Loading>
             <ClipLoader size={100} color={"#ee171f"} />
           </Loading>
           <Loading>Loading...</Loading>
         </>
-      ) : (
+      )}
+
+      {!isLoading && filteredHeroes.length > 0 && (
+        <HeroesList list={filteredHeroes} />
+      )}
+
+      {!isLoading && filteredHeroes.length === 0 && (
         <HeroesList list={heroesList} />
       )}
     </>

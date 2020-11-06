@@ -17,7 +17,7 @@ const InputSearch = styled.input`
   font-size: 16px;
 `;
 
-const SearchBar = ({ placeholder, submitSearchValue }) => {
+const SearchBar = ({ placeholder, submitSearchValue, searchRequest }) => {
   const [searchValue, setSearchValue] = useState("");
 
   return (
@@ -29,7 +29,12 @@ const SearchBar = ({ placeholder, submitSearchValue }) => {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
-        <SearchButton onClick={() => submitSearchValue(searchValue)}>
+        <SearchButton
+          onClick={() => {
+            submitSearchValue(searchValue);
+            searchRequest(searchValue);
+          }}
+        >
           SEARCH
         </SearchButton>
       </WrapperSearchBar>
