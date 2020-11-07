@@ -27,7 +27,10 @@ const SearchBar = ({ placeholder, submitSearchValue }) => {
           type="text"
           placeholder={placeholder}
           value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={(e) => {
+            setSearchValue(e.target.value);
+            submitSearchValue(searchValue);
+          }}
         />
         <SearchButton
           onClick={() => {

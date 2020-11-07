@@ -43,10 +43,12 @@ const Home = () => {
     setLoading(true);
 
     if (searchValue.length > 0) {
+      let timerAfterTyping = setTimeout(() => setLoading(null), 3000);
       Axios.get(urlSearchByHeroName)
         .then((response) => response.data.data.results)
         .then((data) => {
           setFilteredHeroes(data);
+          clearTimeout(timerAfterTyping);
           setLoading(false);
         });
     } else {

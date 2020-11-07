@@ -1,9 +1,11 @@
-//? 1 - Quand je fais une recherche et que je clique sur search la list de héro se met en jour
+<!-- //? 1 - Quand je fais une recherche et que je clique sur search la list de héro se met en jour -->
 
-//!- Problèmes :
-//TODO 1- il faut cliquer 2 fois sur search pour avoir le résultat
-//TODO 2- si la barre de recherche est vide le loading reste affiché, reste n'apparait, si héro n'existe pas, la list re-apparait
-//TODO 3- il faut taper le nom exact pour avoir le résultat (à améliorer)
+<!-- //!- Problèmes : -->
+<!-- //* 1- il faut cliquer 2 fois sur search pour avoir le résultat -->
+<!-- //* 2- si la barre de recherche est vide le loading reste affiché, reste n'apparait, si héro n'existe pas, la list re-apparait -->
+<!-- //* 3- il faut taper le nom exact pour avoir le résultat (à améliorer) -->
+<!-- //TODO 4- Le useeffect s'active dès qu'on tape, rajouter un petit temps après avoir taper -->
+<!-- //TODO 5- Si rien de taper quand on clique sur search => revenir à la liste de base, si pas de héro avoir un bouton pou revenir sur la liste de base -->
 
 // 2- Quand je tape dans la barre de recherche ma liste de hero se met à jour automatiquement après (2sc ?) sans taper
 // 2.1 - Si pas de résultat j'affiche un composant no result
