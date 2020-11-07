@@ -37,52 +37,30 @@ const Home = () => {
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
+    const urlWithAllHeroes = `${API_URL}?&apikey=${API_KEY}`;
+    const urlSearchByHeroName = `${API_URL}?nameStartsWith=${searchValue}&apikey=${API_KEY}`;
+
     setLoading(true);
-    Axios.get(`${API_URL}?&apikey=${API_KEY}`)
-      .then((response) => response.data.data.results)
-      .then((data) => {
-        setHeroesList(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
-  const searchRequest = () => {
-    setLoading(true);
-    Axios.get(`${API_URL}?name=${searchValue}&apikey=${API_KEY}`)
-      .then((response) => response.data.data.results)
-      .then((data) => {
-        setFilteredHeroes(data);
-        setLoading(false);
-        console.log("setHeroesList dans searchRequest", data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // const searchResultsFiltered = heroesList.filter((hero) =>
-  //   hero.name.toLowerCase().includes(searchValue.toLowerCase())
-  // );
-  // console.log("searchResultFiltered", searchResultsFiltered);
-  // console.log("searchvalue dans home", searchValue);
-
-  // const searchResultsFiltered = heroesList.filter((hero) => {
-  //   console.log({
-  //     search: searchValue.toLowerCase(),
-  //     value: hero.name.toLowerCase(),
-  //   });
-
-  //   console.log({
-  //     search: searchValue.toLowerCase(),
-  //     value: hero.name.toLowerCase(),
-  //     result: hero.name.toLowerCase().includes(searchValue.toLowerCase()),
-  //   });
-
-  //   return hero.name.toLowerCase().includes(searchValue.toLowerCase);
-  // });
+    if (searchValue.length > 0) {
+      Axios.get(urlSearchByHeroName)
+        .then((response) => response.data.data.results)
+        .then((data) => {
+          setFilteredHeroes(data);
+          setLoading(false);
+        });
+    } else {
+      Axios.get(urlWithAllHeroes)
+        .then((response) => response.data.data.results)
+        .then((data) => {
+          setHeroesList(data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [searchValue]);
 
   return (
     <>
@@ -93,7 +71,6 @@ const Home = () => {
         <SearchBar
           placeholder={SEARCHBAR_PLACEHOLDER}
           submitSearchValue={(value) => setSearchValue(value)}
-          searchRequest={(value) => searchRequest(value)}
         />
       </SearchBarContainer>
 

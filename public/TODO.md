@@ -1,4 +1,4 @@
-//?    1 - Quand je fais une recherche et que je clique sur search la list de héro se met en jour
+//? 1 - Quand je fais une recherche et que je clique sur search la list de héro se met en jour
 
 //!- Problèmes :
 //TODO 1- il faut cliquer 2 fois sur search pour avoir le résultat

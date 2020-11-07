@@ -17,7 +17,7 @@ const InputSearch = styled.input`
   font-size: 16px;
 `;
 
-const SearchBar = ({ placeholder, submitSearchValue, searchRequest }) => {
+const SearchBar = ({ placeholder, submitSearchValue }) => {
   const [searchValue, setSearchValue] = useState("");
 
   return (
@@ -32,7 +32,6 @@ const SearchBar = ({ placeholder, submitSearchValue, searchRequest }) => {
         <SearchButton
           onClick={() => {
             submitSearchValue(searchValue);
-            searchRequest(searchValue);
           }}
         >
           SEARCH
