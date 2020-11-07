@@ -28,12 +28,16 @@ const Button = styled.button`
   font-weight: bold;
 `;
 
-const HeroesList = ({ list }) => {
+const HeroesList = ({ list, handleSelectHeroById }) => {
   return (
     <Wrapper>
       <HeroesContainer>
         {list.map((hero) => (
-          <HeroItem key={hero.id} hero={hero} />
+          <HeroItem
+            key={hero.id}
+            hero={hero}
+            onClick={() => handleSelectHeroById(hero.id)}
+          />
         ))}
       </HeroesContainer>
       <Button>NEXT</Button>

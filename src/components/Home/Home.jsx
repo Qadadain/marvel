@@ -51,7 +51,7 @@ const Home = () => {
           setLoading(false);
         });
     } else {
-      setFilteredHeroes([]); //--> j'ai écris ça ici pour pouvoir revenir sur la liste de base si la barre de recherche est vide et qu'on appuie sur search
+      setFilteredHeroes([]);
       Axios.get(urlWithAllHeroes)
         .then((response) => response.data.data.results)
         .then((data) => {
@@ -63,6 +63,16 @@ const Home = () => {
         });
     }
   }, [searchValue]);
+
+  const handleSelectHero = (id) => {
+    console.log("id", id);
+    selectHeroById(id);
+  };
+
+  const selectHeroById = (id) => {
+    const heroesArray = heroesList.filter((hero) => hero.id !== id);
+    setFilteredHeroes(heroesArray);
+  };
 
   return (
     <>
@@ -85,11 +95,19 @@ const Home = () => {
         </>
       )}
 
-      {!isLoading && filteredHeroes.length > 0 ? (
-        <HeroesList list={filteredHeroes} />
+      {!isLoading && filteredHeroes.length ? (
+        <HeroesList
+          list={filteredHeroes}
+          handleSelectHeroById={(id) => handleSelectHero(id)}
+        />
       ) : (
         !isLoading &&
-        filteredHeroes.length === 0 && <HeroesList list={heroesList} />
+        filteredHeroes.length === 0 && (
+          <HeroesList
+            list={heroesList}
+            handleSelectHeroById={(id) => handleSelectHero(id)}
+          />
+        )
       )}
     </>
   );
