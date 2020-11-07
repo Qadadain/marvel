@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import debounce from "lodash/debounce";
 
 import SearchButton from "../../Button";
 
@@ -29,7 +30,12 @@ const SearchBar = ({ placeholder, submitSearchValue }) => {
           value={searchValue}
           onChange={(e) => {
             setSearchValue(e.target.value);
-            submitSearchValue(searchValue);
+            const debouncedSubmit = debounce(
+              () => submitSearchValue(e.target.value),
+              1000
+            );
+            debouncedSubmit();
+            // submitSearchValue(e.target.value);
           }}
         />
         <SearchButton
