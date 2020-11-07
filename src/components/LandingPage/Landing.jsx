@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Body = styled.div`
   background-color: black;
-  height: 100vh;
+  height: 100%;
 `;
 
 const LogoText = styled.p`
@@ -13,7 +13,7 @@ const LogoText = styled.p`
   right: 50%;
   transform: translate(50%, -50%);
   text-transform: uppercase;
-  font-family: verdana;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 12em;
   font-weight: 700;
   color: #ee171f;

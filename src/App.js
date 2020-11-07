@@ -13,6 +13,7 @@ function App() {
         <Route path="/" component={Landing} exact />
         <Switch>
           <Route path="/home" component={Home} />
+          {/* <Route path="/hero/:id" component={HeroDetails} /> */}
         </Switch>
       </div>
     </Router>
