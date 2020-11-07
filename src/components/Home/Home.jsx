@@ -52,6 +52,7 @@ const Home = () => {
           setLoading(false);
         });
     } else {
+      setFilteredHeroes("");
       Axios.get(urlWithAllHeroes)
         .then((response) => response.data.data.results)
         .then((data) => {
