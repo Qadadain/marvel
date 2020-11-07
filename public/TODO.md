@@ -7,8 +7,9 @@
 <!-- //TODO 4- Le useeffect s'active dès qu'on tape, rajouter un petit temps après avoir taper -->
 <!-- //TODO 5- Si rien de taper quand on clique sur search => revenir à la liste de base, si pas de héro avoir un bouton pou revenir sur la liste de base -->
 
-// 2- Quand je tape dans la barre de recherche ma liste de hero se met à jour automatiquement après (2sc ?) sans taper
-// 2.1 - Si pas de résultat j'affiche un composant no result
+<!-- // 2- Quand je tape dans la barre de recherche ma liste de hero se met à jour automatiquement après (2sc ?) sans taper -->
+<!-- // 2.1 - Si pas de résultat j'affiche un composant no result -->
+
 // 3 - Quand je clique sur une fiche de héro j'affiche les détails de ce héro dans une autre page
 // 4 - J'ajoute un bouton next sur ma page home qui me permet de voir la prochaine liste de hero
 // 5 - J'ajoute des hero en favoris

@@ -85,12 +85,11 @@ const Home = () => {
         </>
       )}
 
-      {!isLoading && filteredHeroes.length > 0 && (
+      {!isLoading && filteredHeroes.length > 0 ? (
         <HeroesList list={filteredHeroes} />
-      )}
-
-      {!isLoading && filteredHeroes.length === 0 && (
-        <HeroesList list={heroesList} />
+      ) : (
+        !isLoading &&
+        filteredHeroes.length === 0 && <HeroesList list={heroesList} />
       )}
     </>
   );
