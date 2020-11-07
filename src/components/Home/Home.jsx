@@ -52,7 +52,7 @@ const Home = () => {
           setLoading(false);
         });
     } else {
-      setFilteredHeroes("");
+      setFilteredHeroes(""); //--> j'ai écris ça ici pour pouvoir revenir sur la liste de base si la barre de recherche est vide et qu'on appuie sur search
       Axios.get(urlWithAllHeroes)
         .then((response) => response.data.data.results)
         .then((data) => {
