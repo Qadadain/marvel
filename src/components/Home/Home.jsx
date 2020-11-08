@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import styled from "styled-components";
 
-import ClipLoader from "react-spinners/ClipLoader";
-
-import { API_URL, API_KEY } from "../../constants";
-
 import SearchBar from "./SearchBar/SearchBar";
 import HeroesList from "../Heroes/HeroesList";
+import Loading from "../Loading/Loading";
+
+import { API_URL, API_KEY } from "../../constants";
 
 import banner from "../assets/img/marvel-banner.png";
 
@@ -20,13 +19,6 @@ const SearchBarContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-const Loading = styled.div`
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
 `;
 
 const SEARCHBAR_PLACEHOLDER = "Search from Marvel Universe...";
@@ -64,16 +56,6 @@ const Home = () => {
     }
   }, [searchValue]);
 
-  const handleSelectHero = (id) => {
-    console.log("id", id);
-    selectHeroById(id);
-  };
-
-  const selectHeroById = (id) => {
-    const heroesArray = heroesList.filter((hero) => hero.id !== id);
-    setFilteredHeroes(heroesArray);
-  };
-
   return (
     <>
       <BannerContainer>
@@ -88,26 +70,15 @@ const Home = () => {
 
       {isLoading && (
         <>
-          <Loading>
-            <ClipLoader size={100} color={"#ee171f"} />
-          </Loading>
-          <Loading>Loading...</Loading>
+          <Loading />
         </>
       )}
 
       {!isLoading && filteredHeroes.length ? (
-        <HeroesList
-          list={filteredHeroes}
-          handleSelectHeroById={(id) => handleSelectHero(id)}
-        />
+        <HeroesList list={filteredHeroes} />
       ) : (
         !isLoading &&
-        filteredHeroes.length === 0 && (
-          <HeroesList
-            list={heroesList}
-            handleSelectHeroById={(id) => handleSelectHero(id)}
-          />
-        )
+        filteredHeroes.length === 0 && <HeroesList list={heroesList} />
       )}
     </>
   );

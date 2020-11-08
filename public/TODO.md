@@ -1,6 +1,4 @@
-<!-- //? 1 - Quand je fais une recherche et que je clique sur search la list de héro se met en jour -->
-
-<!-- //!- Problèmes : -->
+<!-- //* 1 - Quand je fais une recherche et que je clique sur search la list de héro se met en jour -->
 <!-- //* 1- il faut cliquer 2 fois sur search pour avoir le résultat -->
 <!-- //* 2- si la barre de recherche est vide le loading reste affiché, reste n'apparait, si héro n'existe pas, la list re-apparait -->
 <!-- //* 3- il faut taper le nom exact pour avoir le résultat (à améliorer) -->
@@ -10,7 +8,9 @@
 <!-- // 2- Quand je tape dans la barre de recherche ma liste de hero se met à jour automatiquement après (2sc ?) sans taper -->
 <!-- // 2.1 - Si pas de résultat j'affiche un composant no result -->
 
-//? - Quand je clique sur une fiche de héro j'affiche les détails de ce héro dans une autre page
+<!-- //? - Quand je clique sur une fiche de héro j'affiche les détails de ce héro dans une autre page -->
+<!-- //!Où dois mettre le link dans le composant HeroList ou HeroItem ? -->
+
 // 4 - J'ajoute un bouton next sur ma page home qui me permet de voir la prochaine liste de hero
 // 5 - J'ajoute des hero en favoris
 // 6 - J'ai une page de mes héros favoris

@@ -35,7 +35,6 @@ const SearchBar = ({ placeholder, submitSearchValue }) => {
               1000
             );
             debouncedSubmit();
-            // submitSearchValue(e.target.value);
           }}
         />
         <SearchButton

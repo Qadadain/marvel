@@ -3,7 +3,6 @@ import React from "react";
 import styled from "styled-components";
 
 import HeroItem from "./HeroItem";
-// import HeroDetails from "./HeroDetails";
 
 const Wrapper = styled.div`
   /* display: flex;
@@ -28,16 +27,12 @@ const Button = styled.button`
   font-weight: bold;
 `;
 
-const HeroesList = ({ list, handleSelectHeroById }) => {
+const HeroesList = ({ list }) => {
   return (
     <Wrapper>
       <HeroesContainer>
         {list.map((hero) => (
-          <HeroItem
-            key={hero.id}
-            hero={hero}
-            onClick={() => handleSelectHeroById(hero.id)}
-          />
+          <HeroItem key={hero.id} hero={hero} />
         ))}
       </HeroesContainer>
       <Button>NEXT</Button>
