@@ -57,11 +57,12 @@ const Home = () => {
     const urlNextHeroesPage = `${API_URL}?${urlOffset}&apikey=${API_KEY}`;
 
     setLoading(true);
+
     Axios.get(urlNextHeroesPage)
       .then((response) => response.data.data.results)
       .then((data) => {
         setHeroesList(data);
-        setNextpage(20 + nextPage);
+        setNextpage(nextPage + 20);
         setLoading(false);
       });
   };
@@ -69,17 +70,48 @@ const Home = () => {
   const getPreviousHeroesPage = () => {
     const urlOffset = `offset=${nextPage}`;
     const urlNextHeroesPage = `${API_URL}?${urlOffset}&apikey=${API_KEY}`;
+    const urlWithAllHeroes = `${API_URL}?apikey=${API_KEY}`;
 
     setLoading(true);
-    Axios.get(urlNextHeroesPage)
-      .then((response) => response.data.data.results)
-      .then((data) => {
-        setHeroesList(data);
-        setNextpage(nextPage - 20);
-        setLoading(false);
-        console.log("nextpage dans previous", nextPage);
-      });
+    console.log("nextPage dans getPrevious", nextPage);
+
+    if (nextPage >= 20) {
+      Axios.get(urlNextHeroesPage)
+        .then((response) => response.data.data.results)
+        .then((data) => {
+          setHeroesList(data);
+          setNextpage(nextPage - 20);
+          console.log("nextPage dans nextPage >=20", nextPage);
+          setLoading(false);
+        });
+    } else if (nextPage <= 20) {
+      Axios.get(urlWithAllHeroes)
+        .then((response) => response.data.data.results)
+        .then((data) => {
+          setHeroesList(data);
+          setNextpage(20);
+          setLoading(false);
+        });
+    }
   };
+
+  const isBackButtonVisible = (nextPage) => {
+    const offSetStart = 20;
+    if (nextPage <= offSetStart) {
+      return;
+    } else {
+      return (
+        <button
+          style={{ backgroundColor: "yellow" }}
+          onClick={() => getPreviousHeroesPage()}
+        >
+          BACK
+        </button>
+      );
+    }
+  };
+
+  console.log("nextPage avant render", nextPage);
 
   return (
     <>
@@ -100,6 +132,7 @@ const Home = () => {
         filteredHeroes.length === 0 && (
           <>
             <HeroesList list={heroesList} />
+            {isBackButtonVisible(nextPage)}
             <Button onClick={() => getPreviousHeroesPage()}>BACK</Button>
             <Button onClick={() => getNextHeroesPage()}>NEXT</Button>
           </>

@@ -8,10 +8,12 @@
 <!-- // 2- Quand je tape dans la barre de recherche ma liste de hero se met à jour automatiquement après (2sc ?) sans taper -->
 <!-- // 2.1 - Si pas de résultat j'affiche un composant no result -->
 
-<!-- //? - Quand je clique sur une fiche de héro j'affiche les détails de ce héro dans une autre page -->
-<!-- //!Où dois mettre le link dans le composant HeroList ou HeroItem ? -->
+<!-- //* - Quand je clique sur une fiche de héro j'affiche les détails de ce héro dans une autre page -->
+<!-- //Où dois mettre le link dans le composant HeroList ou HeroItem ? -->
 
-// 4 - J'ajoute un bouton next sur ma page home qui me permet de voir la prochaine liste de hero
+<!-- //* 4 - J'ajoute un bouton next sur ma page home qui me permet de voir la prochaine liste de hero -->
+<!-- //TODO Le bouton back à 20 de retard sur le premier click, quand on est au début de la list si on clique sur back ça devrait pas refresh -->
+
 // 5 - J'ajoute des hero en favoris
 // 6 - J'ai une page de mes héros favoris
 // 7 - Le logo devient un composant header
