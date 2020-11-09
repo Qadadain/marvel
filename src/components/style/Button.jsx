@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-const SearchButton = styled.button`
+const Button = styled.button`
   background-color: #ee171f;
   color: white;
   outline: none;
-  padding: 10px 20px;
+  padding: 16px 20px;
   font-size: 20px;
   font-weight: 900;
   font-size: 16px;
@@ -18,4 +18,4 @@ const SearchButton = styled.button`
   }
 `;
 
-export default SearchButton;
+export default Button;
