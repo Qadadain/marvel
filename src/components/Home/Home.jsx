@@ -6,7 +6,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import HeroesList from "../Heroes/HeroesList";
 import Loading from "../Loading/Loading";
 
-import { API_URL, API_KEY } from "../../constants";
+import { API_URL, API_KEY, SEARCHBAR_PLACEHOLDER } from "../../constants";
 import Button from "../style/Button";
 
 import banner from "../assets/img/marvel-banner.png";
@@ -16,19 +16,26 @@ const BannerContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-const SEARCHBAR_PLACEHOLDER = "Search from Marvel Universe...";
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+`;
 
 const Home = () => {
   const [isLoading, setLoading] = useState(false);
   const [heroesList, setHeroesList] = useState([]);
   const [filteredHeroes, setFilteredHeroes] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const [nextPage, setNextpage] = useState(20);
+  const [currentPage, setCurrentpage] = useState(20);
 
   useEffect(() => {
     const urlWithAllHeroes = `${API_URL}?apikey=${API_KEY}`;
     const urlSearchByHeroName = `${API_URL}?nameStartsWith=${searchValue}&apikey=${API_KEY}`;
+    const urlOffset = `offset=${currentPage}`;
+    const urlCurrentHeroesPage = `${API_URL}?${urlOffset}&apikey=${API_KEY}`;
+
     setLoading(true);
 
     if (searchValue.length) {
@@ -38,6 +45,24 @@ const Home = () => {
           setFilteredHeroes(data);
           setLoading(false);
         });
+    } else if (currentPage > 20) {
+      if (currentPage) {
+        Axios.get(urlCurrentHeroesPage)
+          .then((response) => response.data.data.results)
+          .then((data) => {
+            setHeroesList(data);
+            setCurrentpage(currentPage);
+            setLoading(false);
+          });
+      } else if (currentPage <= 20) {
+        Axios.get(urlWithAllHeroes)
+          .then((response) => response.data.data.results)
+          .then((data) => {
+            setHeroesList(data);
+            setCurrentpage(20);
+            setLoading(false);
+          });
+      }
     } else {
       setFilteredHeroes([]);
       Axios.get(urlWithAllHeroes)
@@ -50,68 +75,18 @@ const Home = () => {
           console.log(err);
         });
     }
-  }, [searchValue]);
+  }, [searchValue, currentPage]);
 
-  const getNextHeroesPage = () => {
-    const urlOffset = `offset=${nextPage}`;
-    const urlNextHeroesPage = `${API_URL}?${urlOffset}&apikey=${API_KEY}`;
-
-    setLoading(true);
-
-    Axios.get(urlNextHeroesPage)
-      .then((response) => response.data.data.results)
-      .then((data) => {
-        setHeroesList(data);
-        setNextpage(nextPage + 20);
-        setLoading(false);
-      });
-  };
-
-  const getPreviousHeroesPage = () => {
-    const urlOffset = `offset=${nextPage}`;
-    const urlNextHeroesPage = `${API_URL}?${urlOffset}&apikey=${API_KEY}`;
-    const urlWithAllHeroes = `${API_URL}?apikey=${API_KEY}`;
-
-    setLoading(true);
-    console.log("nextPage dans getPrevious", nextPage);
-
-    if (nextPage >= 20) {
-      Axios.get(urlNextHeroesPage)
-        .then((response) => response.data.data.results)
-        .then((data) => {
-          setHeroesList(data);
-          setNextpage(nextPage - 20);
-          console.log("nextPage dans nextPage >=20", nextPage);
-          setLoading(false);
-        });
-    } else if (nextPage <= 20) {
-      Axios.get(urlWithAllHeroes)
-        .then((response) => response.data.data.results)
-        .then((data) => {
-          setHeroesList(data);
-          setNextpage(20);
-          setLoading(false);
-        });
-    }
-  };
-
-  const isBackButtonVisible = (nextPage) => {
+  const isBackButtonVisible = (currentPage) => {
     const offSetStart = 20;
-    if (nextPage <= offSetStart) {
+    if (currentPage === offSetStart) {
       return;
     } else {
       return (
-        <button
-          style={{ backgroundColor: "yellow" }}
-          onClick={() => getPreviousHeroesPage()}
-        >
-          BACK
-        </button>
+        <Button onClick={() => setCurrentpage(currentPage - 20)}>BACK</Button>
       );
     }
   };
-
-  console.log("nextPage avant render", nextPage);
 
   return (
     <>
@@ -122,7 +97,10 @@ const Home = () => {
         placeholder={SEARCHBAR_PLACEHOLDER}
         submitSearchValue={(value) => setSearchValue(value)}
       />
-
+      <ButtonContainer>
+        {isBackButtonVisible(currentPage)}
+        <Button onClick={() => setCurrentpage(currentPage + 20)}>NEXT</Button>
+      </ButtonContainer>
       {isLoading && <Loading />}
 
       {!isLoading && filteredHeroes.length ? (
@@ -132,9 +110,6 @@ const Home = () => {
         filteredHeroes.length === 0 && (
           <>
             <HeroesList list={heroesList} />
-            {isBackButtonVisible(nextPage)}
-            <Button onClick={() => getPreviousHeroesPage()}>BACK</Button>
-            <Button onClick={() => getNextHeroesPage()}>NEXT</Button>
           </>
         )
       )}

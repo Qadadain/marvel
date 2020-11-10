@@ -12,7 +12,7 @@
 <!-- //Où dois mettre le link dans le composant HeroList ou HeroItem ? -->
 
 <!-- //* 4 - J'ajoute un bouton next sur ma page home qui me permet de voir la prochaine liste de hero -->
-<!-- //TODO Le bouton back à 20 de retard sur le premier click, quand on est au début de la list si on clique sur back ça devrait pas refresh -->
+<!-- //* Le bouton back à 20 de retard sur le premier click, quand on est au début de la list si on clique sur back ça devrait pas refresh -->
 
 // 5 - J'ajoute des hero en favoris
 // 6 - J'ai une page de mes héros favoris
