@@ -10,6 +10,7 @@ import { API_URL, API_KEY, SEARCHBAR_PLACEHOLDER } from "../../constants";
 import Button from "../style/Button";
 
 import banner from "../assets/img/marvel-banner.png";
+import { Link } from "react-router-dom";
 
 const BannerContainer = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ const Home = () => {
     const urlWithAllHeroes = `${API_URL}?apikey=${API_KEY}`;
     const urlSearchByHeroName = `${API_URL}?nameStartsWith=${searchValue}&apikey=${API_KEY}`;
     const urlOffset = `offset=${currentPage}`;
-    const urlCurrentHeroesPage = `${API_URL}?${urlOffset}&apikey=${API_KEY}`;
+    const urlCurrentPage = `${API_URL}?${urlOffset}&apikey=${API_KEY}`;
 
     setLoading(true);
 
@@ -47,7 +48,7 @@ const Home = () => {
         });
     } else if (currentPage > 20) {
       if (currentPage) {
-        Axios.get(urlCurrentHeroesPage)
+        Axios.get(urlCurrentPage)
           .then((response) => response.data.data.results)
           .then((data) => {
             setHeroesList(data);
@@ -101,6 +102,7 @@ const Home = () => {
         {isBackButtonVisible(currentPage)}
         <Button onClick={() => setCurrentpage(currentPage + 20)}>NEXT</Button>
       </ButtonContainer>
+      <Link to="/favorites">My Favorites</Link>
       {isLoading && <Loading />}
 
       {!isLoading && filteredHeroes.length ? (

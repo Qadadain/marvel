@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { getHeroImage } from "../../utils/hero";
-import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
 import { Link } from "react-router-dom";
+
+import { getHeroImage } from "../../utils/hero";
+
+import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
+
+import Button from "../style/Button";
 
 const Text = styled.div`
   color: #fff;
@@ -31,12 +35,21 @@ const HeroContainer = styled.div`
 
 const Hero = ({ hero }) => {
   return (
-    <Link to={`/hero/${hero.id}`}>
-      <HeroContainer key={hero.id}>
-        <Text>{hero.name}</Text>
-        <img src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)} alt="images" />
-      </HeroContainer>
-    </Link>
+    <>
+      <Link to={`/hero/${hero.id}`}>
+        <HeroContainer key={hero.id}>
+          <Text>{hero.name}</Text>
+          <img src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)} alt="images" />
+        </HeroContainer>
+      </Link>
+      <Button
+        onClick={() =>
+          localStorage.setItem("addToFavoritesHeroes", JSON.stringify([hero]))
+        }
+      >
+        ADD TO FAVORITE
+      </Button>
+    </>
   );
 };
 

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import Loading from "../Loading/Loading";
 
-import { getHeroImage } from "../../utils/hero";
+import { getHeroImage, isHeroDescriptionAvailable } from "../../utils/hero";
 import { API_URL, API_KEY } from "../../constants";
 import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
 
@@ -38,15 +38,6 @@ const HeroDetails = (props) => {
         console.log(err);
       });
   }, [props.match.params.id]);
-
-  const isHeroDescriptionAvailable = (hero) => {
-    const heroDescription = hero.description.length > 0;
-    if (heroDescription) {
-      return <>{hero.description}</>;
-    } else {
-      return <>No description available</>;
-    }
-  };
 
   return (
     <>
