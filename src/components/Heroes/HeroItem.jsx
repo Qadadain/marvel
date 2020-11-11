@@ -39,7 +39,10 @@ const Hero = ({ hero }) => {
 
   const addHero = (hero) => {
     if (hero.id !== heroToFav.id) {
-      localStorage.setItem("addToFavoritesHeroes", JSON.stringify([hero]));
+      localStorage.setItem(
+        "addToFavoritesHeroes",
+        JSON.stringify([...heroToFav, hero])
+      );
       setHeroToFav([...heroToFav, hero]);
     } else {
       return;
