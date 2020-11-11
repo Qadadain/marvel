@@ -1,11 +1,11 @@
 export const getHeroImage = (hero, size) =>
-  `${hero.thumbnail.path}/${size}.${hero.thumbnail.extension}`;
+  `${hero.thumbnail.path}/${size}.${hero.thumbnail.extension}`
 
 export const isHeroDescriptionAvailable = (hero) => {
-  const heroDescription = hero.description.length > 0;
+  const heroDescription = hero.description.length > 0
   if (heroDescription) {
-    return <>{hero.description}</>;
+    return <>{hero.description}</>
   } else {
-    return <>No description available</>;
+    return <>No description available</>
   }
-};
+}

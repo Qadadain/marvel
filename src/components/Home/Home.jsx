@@ -1,143 +1,82 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react"
+import Axios from "axios"
+import styled from "styled-components"
 
-import SearchBar from "../SearchBar/SearchBar";
-import HeroesList from "../Heroes/HeroesList";
-import Loading from "../Loading/Loading";
+import SearchBar from "../SearchBar/SearchBar"
+import HeroesList from "../Heroes/HeroesList"
+import Loading from "../Loading/Loading"
 
-import { API_URL, API_KEY, SEARCHBAR_PLACEHOLDER } from "../../constants";
-import Button from "../style/Button";
+import {
+  SEARCHBAR_PLACEHOLDER,
+  NUMBER_OF_HERO_PER_PAGE,
+  ROUTE_FAVORITES,
+} from "../../constants"
+import Button from "../style/Button"
 
-import banner from "../assets/img/marvel-banner.png";
-import { Link } from "react-router-dom";
+import banner from "../assets/img/marvel-banner.png"
+import { Link } from "react-router-dom"
+import getApiUrl from "../../utils/getApiUrl"
 
-const BannerContainer = styled.div`
+const Banner = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-const ButtonContainer = styled.div`
+`
+const Buttons = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 15px;
-`;
+`
 
 const Home = () => {
-  const [isLoading, setLoading] = useState(false);
-  const [heroesList, setHeroesList] = useState([]);
-  const [filteredHeroes, setFilteredHeroes] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-  const [currentPage, setCurrentpage] = useState(20);
+  const [isLoading, setLoading] = useState(false)
+  const [heroesList, setHeroesList] = useState([])
+  const [searchValue, setSearchValue] = useState("")
+  const [currentOffset, setCurrentOffset] = useState(0)
 
   useEffect(() => {
-    const urlWithAllHeroes = `${API_URL}?apikey=${API_KEY}`;
-    const urlSearchByHeroName = `${API_URL}?nameStartsWith=${searchValue}&apikey=${API_KEY}`;
-    const urlOffset = `offset=${currentPage}`;
-    const urlCurrentPage = `${API_URL}?${urlOffset}&apikey=${API_KEY}`;
+    setLoading(true)
 
-    setLoading(true);
+    const apiUrl = getApiUrl(searchValue, currentOffset)
 
-    if (searchValue.length) {
-      Axios.get(urlSearchByHeroName)
-        .then((response) => response.data.data.results)
-        .then((data) => {
-          setFilteredHeroes(data);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } else if (currentPage > 20) {
-      if (currentPage) {
-        Axios.get(urlCurrentPage)
-          .then((response) => response.data.data.results)
-          .then((data) => {
-            setHeroesList(data);
-            setCurrentpage(currentPage);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      } else if (currentPage <= 20) {
-        Axios.get(urlWithAllHeroes)
-          .then((response) => response.data.data.results)
-          .then((data) => {
-            setHeroesList(data);
-            setCurrentpage(20);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      }
-    } else {
-      setFilteredHeroes([]);
-      Axios.get(urlWithAllHeroes)
-        .then((response) => response.data.data.results)
-        .then((data) => {
-          setHeroesList(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  }, [searchValue, currentPage]);
+    Axios.get(apiUrl)
+      .then((response) => response.data.data.results)
+      .then((data) => {
+        setHeroesList(data)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [searchValue, currentOffset])
 
-  const onHeroSearch = !isLoading && filteredHeroes.length;
-  const initialHeroList = !isLoading && filteredHeroes.length === 0;
-
-  const isBackButtonVisible = (currentPage) => {
-    const offSetStart = 20;
-    if (currentPage !== offSetStart) {
-      return (
-        <Button onClick={() => setCurrentpage(currentPage - 20)}>BACK</Button>
-      );
-    }
-  };
-
-  const displayButtonNextAndBack = (
-    <ButtonContainer>
-      {isBackButtonVisible(currentPage)}
-      <Button onClick={() => setCurrentpage(currentPage + 20)}>NEXT</Button>
-    </ButtonContainer>
-  );
-
-  const linkToFavorites = <Link to="/favorites">My Favorites</Link>;
-
-  const searchBar = (
-    <SearchBar
-      placeholder={SEARCHBAR_PLACEHOLDER}
-      submitSearchValue={(value) => setSearchValue(value)}
-    />
-  );
-
-  const bannerHeader = (
-    <BannerContainer>
-      <img src={banner} alt="logo" />
-    </BannerContainer>
-  );
+  const handleNextClick = () =>
+    setCurrentOffset(currentOffset + NUMBER_OF_HERO_PER_PAGE)
+  const handlePreviousClick = () =>
+    setCurrentOffset(currentOffset - NUMBER_OF_HERO_PER_PAGE)
 
   return (
     <>
-      {bannerHeader}
-      {searchBar}
-      {displayButtonNextAndBack}
-      {linkToFavorites}
-      {isLoading && <Loading />}
-      {onHeroSearch ? (
-        <HeroesList list={filteredHeroes} />
-      ) : (
-        initialHeroList && (
-          <>
-            <HeroesList list={heroesList} />
-          </>
-        )
+      <Banner>
+        <img src={banner} alt="logo" />
+      </Banner>
+      <SearchBar
+        placeholder={SEARCHBAR_PLACEHOLDER}
+        submitSearchValue={setSearchValue}
+      />
+      {!searchValue && (
+        <Buttons>
+          {currentOffset !== 0 && (
+            <Button onClick={handlePreviousClick}>BACK</Button>
+          )}
+          <Button onClick={handleNextClick}>NEXT</Button>
+        </Buttons>
       )}
+      <Link to={ROUTE_FAVORITES}>My Favorites</Link>
+      {isLoading && <Loading />}
+      {!isLoading && <HeroesList list={heroesList} />}
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

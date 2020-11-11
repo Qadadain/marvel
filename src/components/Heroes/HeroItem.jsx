@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React, { useState } from "react"
+import styled from "styled-components"
+import { Link } from "react-router-dom"
 
-import { getHeroImage } from "../../utils/hero";
+import { getHeroImage } from "../../utils/hero"
 
-import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
+import { HERO_IMAGE_FORMAT_BIG, ROUTE_HERO } from "../../constants"
 
-import Button from "../style/Button";
-import { set } from "lodash";
+import Button from "../style/Button"
 
 const Text = styled.div`
   color: #fff;
@@ -16,7 +15,7 @@ const Text = styled.div`
   font-weight: bold;
   text-decoration: none;
   cursor: pointer;
-`;
+`
 
 const HeroContainer = styled.div`
   margin-top: 5px;
@@ -32,10 +31,10 @@ const HeroContainer = styled.div`
   margin-bottom: 10px;
   height: 400px;
   cursor: pointer;
-`;
+`
 
-const Hero = ({ hero }) => {
-  const [heroToFav, setHeroToFav] = useState([]);
+const Hero = ({ hero, className }) => {
+  const [heroToFav, setHeroToFav] = useState([])
 
   // const addHero = (hero) => {
   //   if (hero.id !== heroToFav.id) {
@@ -48,10 +47,11 @@ const Hero = ({ hero }) => {
   //     return;
   //   }
   // };
-  console.log("favoris heros", heroToFav);
+  console.log("favoris heros", heroToFav)
+
   return (
-    <>
-      <Link to={`/hero/${hero.id}`}>
+    <div className={className}>
+      <Link to={`${ROUTE_HERO}/${hero.id}`}>
         <HeroContainer key={hero.id}>
           <Text>{hero.name}</Text>
           <img src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)} alt="images" />
@@ -65,8 +65,8 @@ const Hero = ({ hero }) => {
       >
         ADD TO FAVORITE
       </Button>
-    </>
-  );
-};
+    </div>
+  )
+}
 
-export default Hero;
+export default Hero
