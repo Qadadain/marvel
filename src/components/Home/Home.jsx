@@ -44,6 +44,8 @@ const Home = () => {
         .then((response) => response.data.data.results)
         .then((data) => {
           setFilteredHeroes(data);
+        })
+        .finally(() => {
           setLoading(false);
         });
     } else if (currentPage > 20) {
@@ -53,6 +55,8 @@ const Home = () => {
           .then((data) => {
             setHeroesList(data);
             setCurrentpage(currentPage);
+          })
+          .finally(() => {
             setLoading(false);
           });
       } else if (currentPage <= 20) {
@@ -61,6 +65,8 @@ const Home = () => {
           .then((data) => {
             setHeroesList(data);
             setCurrentpage(20);
+          })
+          .finally(() => {
             setLoading(false);
           });
       }
@@ -70,13 +76,28 @@ const Home = () => {
         .then((response) => response.data.data.results)
         .then((data) => {
           setHeroesList(data);
-          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   }, [searchValue, currentPage]);
+
+  const onHeroSearch = !isLoading && filteredHeroes.length;
+  const initialHeroList = !isLoading && filteredHeroes.length === 0;
+
+  const heroListDisplay = onHeroSearch ? (
+    <HeroesList list={filteredHeroes} />
+  ) : (
+    initialHeroList && (
+      <>
+        <HeroesList list={heroesList} />
+      </>
+    )
+  );
 
   const isBackButtonVisible = (currentPage) => {
     const offSetStart = 20;
@@ -89,32 +110,36 @@ const Home = () => {
     }
   };
 
+  const displayButtonNextAndBack = (
+    <ButtonContainer>
+      {isBackButtonVisible(currentPage)}
+      <Button onClick={() => setCurrentpage(currentPage + 20)}>NEXT</Button>
+    </ButtonContainer>
+  );
+
+  const linkToFavorites = <Link to="/favorites">My Favorites</Link>;
+
+  const searchBar = (
+    <SearchBar
+      placeholder={SEARCHBAR_PLACEHOLDER}
+      submitSearchValue={(value) => setSearchValue(value)}
+    />
+  );
+
+  const bannerHeader = (
+    <BannerContainer>
+      <img src={banner} alt="logo" />
+    </BannerContainer>
+  );
+
   return (
     <>
-      <BannerContainer>
-        <img src={banner} alt="logo" />
-      </BannerContainer>
-      <SearchBar
-        placeholder={SEARCHBAR_PLACEHOLDER}
-        submitSearchValue={(value) => setSearchValue(value)}
-      />
-      <ButtonContainer>
-        {isBackButtonVisible(currentPage)}
-        <Button onClick={() => setCurrentpage(currentPage + 20)}>NEXT</Button>
-      </ButtonContainer>
-      <Link to="/favorites">My Favorites</Link>
+      {bannerHeader}
+      {searchBar}
+      {displayButtonNextAndBack}
+      {linkToFavorites}
       {isLoading && <Loading />}
-
-      {!isLoading && filteredHeroes.length ? (
-        <HeroesList list={filteredHeroes} />
-      ) : (
-        !isLoading &&
-        filteredHeroes.length === 0 && (
-          <>
-            <HeroesList list={heroesList} />
-          </>
-        )
-      )}
+      {heroListDisplay}
     </>
   );
 };

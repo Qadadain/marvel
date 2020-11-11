@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -7,6 +7,7 @@ import { getHeroImage } from "../../utils/hero";
 import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
 
 import Button from "../style/Button";
+import { set } from "lodash";
 
 const Text = styled.div`
   color: #fff;
@@ -34,6 +35,18 @@ const HeroContainer = styled.div`
 `;
 
 const Hero = ({ hero }) => {
+  const [heroToFav, setHeroToFav] = useState([]);
+
+  const addHero = (hero) => {
+    if (hero.id !== heroToFav.id) {
+      localStorage.setItem("addToFavoritesHeroes", JSON.stringify([hero]));
+      setHeroToFav([...heroToFav, hero]);
+    } else {
+      return;
+    }
+  };
+  console.log("herotofav id", heroToFav);
+  console.log("favoris heros", heroToFav);
   return (
     <>
       <Link to={`/hero/${hero.id}`}>
@@ -43,9 +56,10 @@ const Hero = ({ hero }) => {
         </HeroContainer>
       </Link>
       <Button
-        onClick={() =>
-          localStorage.setItem("addToFavoritesHeroes", JSON.stringify([hero]))
-        }
+        // onClick={() =>
+        //   localStorage.setItem("addToFavoritesHeroes", JSON.stringify([hero]))
+        // }
+        onClick={() => addHero(hero)}
       >
         ADD TO FAVORITE
       </Button>
