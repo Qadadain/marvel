@@ -37,18 +37,17 @@ const HeroContainer = styled.div`
 const Hero = ({ hero }) => {
   const [heroToFav, setHeroToFav] = useState([]);
 
-  const addHero = (hero) => {
-    if (hero.id !== heroToFav.id) {
-      localStorage.setItem(
-        "addToFavoritesHeroes",
-        JSON.stringify([...heroToFav, hero])
-      );
-      setHeroToFav([...heroToFav, hero]);
-    } else {
-      return;
-    }
-  };
-  console.log("herotofav id", heroToFav);
+  // const addHero = (hero) => {
+  //   if (hero.id !== heroToFav.id) {
+  //     localStorage.setItem(
+  //       "addToFavoritesHeroes",
+  //       JSON.stringify([...heroToFav, hero])
+  //     );
+  //     setHeroToFav([...heroToFav, hero]);
+  //   } else {
+  //     return;
+  //   }
+  // };
   console.log("favoris heros", heroToFav);
   return (
     <>
@@ -62,7 +61,7 @@ const Hero = ({ hero }) => {
         // onClick={() =>
         //   localStorage.setItem("addToFavoritesHeroes", JSON.stringify([hero]))
         // }
-        onClick={() => addHero(hero)}
+        onClick={() => setHeroToFav(hero)}
       >
         ADD TO FAVORITE
       </Button>

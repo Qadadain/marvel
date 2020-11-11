@@ -89,21 +89,9 @@ const Home = () => {
   const onHeroSearch = !isLoading && filteredHeroes.length;
   const initialHeroList = !isLoading && filteredHeroes.length === 0;
 
-  const heroListDisplay = onHeroSearch ? (
-    <HeroesList list={filteredHeroes} />
-  ) : (
-    initialHeroList && (
-      <>
-        <HeroesList list={heroesList} />
-      </>
-    )
-  );
-
   const isBackButtonVisible = (currentPage) => {
     const offSetStart = 20;
-    if (currentPage === offSetStart) {
-      return;
-    } else {
+    if (currentPage !== offSetStart) {
       return (
         <Button onClick={() => setCurrentpage(currentPage - 20)}>BACK</Button>
       );
@@ -139,7 +127,15 @@ const Home = () => {
       {displayButtonNextAndBack}
       {linkToFavorites}
       {isLoading && <Loading />}
-      {heroListDisplay}
+      {onHeroSearch ? (
+        <HeroesList list={filteredHeroes} />
+      ) : (
+        initialHeroList && (
+          <>
+            <HeroesList list={heroesList} />
+          </>
+        )
+      )}
     </>
   );
 };
