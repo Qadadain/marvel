@@ -19,8 +19,8 @@ const HeroDetailsContainer = styled.div`
 `;
 
 const HeroDetails = (props) => {
-  const [heroDetails, setHeroDetails] = useState([]);
-  const [isLoading, setLoading] = useState(false);
+  const [hero, setHero] = useState(null);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const id = props.match.params.id;
@@ -31,30 +31,37 @@ const HeroDetails = (props) => {
     Axios.get(urlWithHeroId)
       .then((response) => response.data.data.results)
       .then((data) => {
-        setHeroDetails(data);
-        setLoading(false);
+        setHero(data[0]);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [props.match.params.id]);
 
   return (
     <>
-      <HeroDetailsContainer>
-        {isLoading && <Loading />}
-        {heroDetails.map((hero) => (
-          <div key={hero.id}>
-            <h1>{hero.name}</h1>
-            <p>{isHeroDescriptionAvailable(hero)}</p>
-            <p>Last Modified : {hero.modified}</p>
-            <img src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)} alt="images" />
-          </div>
-        ))}
-      </HeroDetailsContainer>
-      <Link to="/home">
-        <Button>Back</Button>
-      </Link>
+      {isLoading && <Loading />}
+      {!isLoading && hero && (
+        <>
+          <HeroDetailsContainer>
+            <div key={hero.id}>
+              <h1>{hero.name}</h1>
+              <p>{isHeroDescriptionAvailable(hero)}</p>
+              <p>{hero.modified}</p>
+              <img
+                src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)}
+                alt="images"
+              />
+            </div>
+          </HeroDetailsContainer>
+          <Link to="/home">
+            <Button>BACK</Button>
+          </Link>
+        </>
+      )}
     </>
   );
 };

@@ -6,9 +6,6 @@ import { getHeroImage } from "../../utils/hero";
 
 import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
 
-import Button from "../style/Button";
-import { set } from "lodash";
-
 const Text = styled.div`
   color: #fff;
   text-align: center;
@@ -20,52 +17,35 @@ const Text = styled.div`
 
 const HeroContainer = styled.div`
   margin-top: 5px;
-  border: 2px solid blue;
+  border: 1px solid green;
+  width: 300px;
   color: white;
-  width: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-left: 33px;
-  margin-right: 5px;
   margin-bottom: 10px;
   height: 400px;
   cursor: pointer;
 `;
 
-const Hero = ({ hero }) => {
-  const [heroToFav, setHeroToFav] = useState([]);
+const StyleLink = styled(Link)`
+  text-decoration: none;
+`;
 
-  // const addHero = (hero) => {
-  //   if (hero.id !== heroToFav.id) {
-  //     localStorage.setItem(
-  //       "addToFavoritesHeroes",
-  //       JSON.stringify([...heroToFav, hero])
-  //     );
-  //     setHeroToFav([...heroToFav, hero]);
-  //   } else {
-  //     return;
-  //   }
-  // };
-  console.log("favoris heros", heroToFav);
+const Hero = ({ hero, isFavorite }) => {
   return (
-    <>
-      <Link to={`/hero/${hero.id}`}>
+    <div className="test">
+      <StyleLink to={`/hero/${hero.id}`}>
         <HeroContainer key={hero.id}>
-          <Text>{hero.name}</Text>
+          <Text>
+            <h2>{hero.name}</h2>
+            <p>{isFavorite ? "favoris" : "pas favoris"}</p>
+          </Text>
           <img src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)} alt="images" />
         </HeroContainer>
-      </Link>
-      <Button
-        // onClick={() =>
-        //   localStorage.setItem("addToFavoritesHeroes", JSON.stringify([hero]))
-        // }
-        onClick={() => setHeroToFav(hero)}
-      >
-        ADD TO FAVORITE
-      </Button>
-    </>
+      </StyleLink>
+    </div>
   );
 };
 

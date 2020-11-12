@@ -14,8 +14,14 @@
 <!-- //* 4 - J'ajoute un bouton next sur ma page home qui me permet de voir la prochaine liste de hero -->
 <!-- //* Le bouton back à 20 de retard sur le premier click, quand on est au début de la list si on clique sur back ça devrait pas refresh -->
 
-// 5 - J'ajoute des hero en favoris
-// 6 - J'ai une page de mes héros favoris
+<!-- //* - J'ajoute des hero en favoris -->
+<!-- //* 6 - J'ai une page de mes héros favoris -->
+
+    //Supprimer tous les favoris d'un coup ou un par un
+    //Si aucun favoris, bouton griser mes favoris
+
+    // Faire la page détail
+
 // 7 - Le logo devient un composant header
 // 8 - Je clean mon code en essayant de le rentre plus optimisé
 // 9 - Je travail la mise en forme de ma liste de héro pour avoir un truc stylé

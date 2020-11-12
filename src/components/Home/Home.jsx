@@ -6,135 +6,119 @@ import SearchBar from "../SearchBar/SearchBar";
 import HeroesList from "../Heroes/HeroesList";
 import Loading from "../Loading/Loading";
 
-import { API_URL, API_KEY, SEARCHBAR_PLACEHOLDER } from "../../constants";
+import {
+  SEARCHBAR_PLACEHOLDER,
+  NUMBER_OF_HERO_PER_PAGE_TO_DISPLAY,
+} from "../../constants";
 import Button from "../style/Button";
 
 import banner from "../assets/img/marvel-banner.png";
 import { Link } from "react-router-dom";
+import getApiUrl from "../../utils/getApiUrl";
+import getInitialFavorites from "../../utils/getInitialFavorites";
 
-const BannerContainer = styled.div`
+const Banner = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
-const ButtonContainer = styled.div`
+const Buttons = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 15px;
 `;
 
+const StyledLink = styled(Link)`
+  background-color: #ee171f;
+  color: white;
+  outline: none;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: 900;
+  z-index: 3;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    color: #ee171f;
+    background-color: white;
+    transition: 350ms all;
+  }
+`;
+
 const Home = () => {
   const [isLoading, setLoading] = useState(false);
   const [heroesList, setHeroesList] = useState([]);
-  const [filteredHeroes, setFilteredHeroes] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const [currentPage, setCurrentpage] = useState(20);
+  const [currentOffSet, setCurrentOffset] = useState(0);
+  const [favorites, setFavorites] = useState(getInitialFavorites());
 
   useEffect(() => {
-    const urlWithAllHeroes = `${API_URL}?apikey=${API_KEY}`;
-    const urlSearchByHeroName = `${API_URL}?nameStartsWith=${searchValue}&apikey=${API_KEY}`;
-    const urlOffset = `offset=${currentPage}`;
-    const urlCurrentPage = `${API_URL}?${urlOffset}&apikey=${API_KEY}`;
-
     setLoading(true);
 
-    if (searchValue.length) {
-      Axios.get(urlSearchByHeroName)
-        .then((response) => response.data.data.results)
-        .then((data) => {
-          setFilteredHeroes(data);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } else if (currentPage > 20) {
-      if (currentPage) {
-        Axios.get(urlCurrentPage)
-          .then((response) => response.data.data.results)
-          .then((data) => {
-            setHeroesList(data);
-            setCurrentpage(currentPage);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      } else if (currentPage <= 20) {
-        Axios.get(urlWithAllHeroes)
-          .then((response) => response.data.data.results)
-          .then((data) => {
-            setHeroesList(data);
-            setCurrentpage(20);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      }
+    const apiUrl = getApiUrl(searchValue, currentOffSet);
+
+    Axios.get(apiUrl)
+      .then((response) => response.data.data.results)
+      .then((data) => {
+        setHeroesList(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [searchValue, currentOffSet]);
+
+  useEffect(() => {
+    localStorage.setItem("addToFavoritesHeroes", JSON.stringify(favorites));
+  }, [favorites]);
+
+  const handleNextClick = () =>
+    setCurrentOffset(currentOffSet + NUMBER_OF_HERO_PER_PAGE_TO_DISPLAY);
+  const handlePreviousClick = () =>
+    setCurrentOffset(currentOffSet - NUMBER_OF_HERO_PER_PAGE_TO_DISPLAY);
+
+  const toggleFavoriteHero = (hero) => {
+    if (!favorites.some((favoriteHero) => favoriteHero.id === hero.id)) {
+      setFavorites([...favorites, hero]);
     } else {
-      setFilteredHeroes([]);
-      Axios.get(urlWithAllHeroes)
-        .then((response) => response.data.data.results)
-        .then((data) => {
-          setHeroesList(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  }, [searchValue, currentPage]);
-
-  const onHeroSearch = !isLoading && filteredHeroes.length;
-  const initialHeroList = !isLoading && filteredHeroes.length === 0;
-
-  const isBackButtonVisible = (currentPage) => {
-    const offSetStart = 20;
-    if (currentPage !== offSetStart) {
-      return (
-        <Button onClick={() => setCurrentpage(currentPage - 20)}>BACK</Button>
+      const newFavorites = favorites.filter(
+        (favorite) => favorite.id !== hero.id
       );
+      setFavorites(newFavorites);
     }
   };
 
-  const displayButtonNextAndBack = (
-    <ButtonContainer>
-      {isBackButtonVisible(currentPage)}
-      <Button onClick={() => setCurrentpage(currentPage + 20)}>NEXT</Button>
-    </ButtonContainer>
-  );
-
-  const linkToFavorites = <Link to="/favorites">My Favorites</Link>;
-
-  const searchBar = (
-    <SearchBar
-      placeholder={SEARCHBAR_PLACEHOLDER}
-      submitSearchValue={(value) => setSearchValue(value)}
-    />
-  );
-
-  const bannerHeader = (
-    <BannerContainer>
-      <img src={banner} alt="logo" />
-    </BannerContainer>
-  );
-
   return (
     <>
-      {bannerHeader}
-      {searchBar}
-      {displayButtonNextAndBack}
-      {linkToFavorites}
+      <Banner>
+        <img src={banner} alt="logo" />
+      </Banner>
+      <SearchBar
+        placeholder={SEARCHBAR_PLACEHOLDER}
+        submitSearchValue={setSearchValue}
+      />
+
+      <StyledLink to="/favorites">My Favorites</StyledLink>
+      {!searchValue && (
+        <Buttons>
+          {currentOffSet !== 0 && (
+            <Button onClick={handlePreviousClick}>BACK</Button>
+          )}
+          <Button onClick={handleNextClick}>NEXT</Button>
+        </Buttons>
+      )}
+
       {isLoading && <Loading />}
-      {onHeroSearch ? (
-        <HeroesList list={filteredHeroes} />
-      ) : (
-        initialHeroList && (
-          <>
-            <HeroesList list={heroesList} />
-          </>
-        )
+      {!isLoading && (
+        <HeroesList
+          list={heroesList}
+          addHeroToFavorites={toggleFavoriteHero}
+          favoritesList={favorites}
+        />
       )}
     </>
   );
