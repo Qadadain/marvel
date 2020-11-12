@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { getHeroImage } from "../../utils/hero";
 
 import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as fasFaHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as falFaHeart } from "@fortawesome/free-regular-svg-icons";
 
 const Text = styled.div`
   color: #fff;
@@ -25,26 +29,40 @@ const HeroContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
-  height: 400px;
-  cursor: pointer;
+  height: 500px;
 `;
 
 const StyleLink = styled(Link)`
   text-decoration: none;
+  color: white;
 `;
 
-const Hero = ({ hero, isFavorite }) => {
+const Hero = ({ hero, isFavorite, addToFavorite, removeFromFavorite }) => {
   return (
     <div className="test">
-      <StyleLink to={`/hero/${hero.id}`}>
-        <HeroContainer key={hero.id}>
-          <Text>
+      <HeroContainer key={hero.id}>
+        <div className="testFav">
+          {isFavorite ? (
+            <FontAwesomeIcon
+              style={{ color: "red", fontSize: "30px", cursor: "pointer" }}
+              icon={fasFaHeart}
+              onClick={() => removeFromFavorite(hero)}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={falFaHeart}
+              style={{ fontSize: "30px", cursor: "pointer" }}
+              onClick={() => addToFavorite(hero)}
+            />
+          )}
+        </div>
+        <Text>
+          <StyleLink to={`/hero/${hero.id}`}>
             <h2>{hero.name}</h2>
-            <p>{isFavorite ? "favoris" : "pas favoris"}</p>
-          </Text>
-          <img src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)} alt="images" />
-        </HeroContainer>
-      </StyleLink>
+          </StyleLink>
+        </Text>
+        <img src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)} alt="images" />
+      </HeroContainer>
     </div>
   );
 };

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { getHeroImage, isHeroDescriptionAvailable } from "../../utils/hero";
 import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
 import { Link } from "react-router-dom";
 import Button from "../style/Button";
 import styled from "styled-components";
+import getInitialFavorites from "../../utils/getInitialFavorites";
 
 const HeroesContainer = styled.div`
   margin-top: 10px;
@@ -22,9 +23,16 @@ const Wrapper = styled.div`
 `;
 
 const Favorites = () => {
-  const myFavoritesHeroes = JSON.parse(
-    localStorage.getItem("addToFavoritesHeroes")
-  );
+  const [favorites, setFavorites] = useState(getInitialFavorites());
+
+  useEffect(() => {
+    const myFavoritesHeroes = JSON.parse(
+      localStorage.getItem("addToFavoritesHeroes")
+    );
+    setFavorites(myFavoritesHeroes);
+  }, [favorites]);
+
+  console.log("favorite", favorites);
 
   return (
     <>
@@ -32,8 +40,8 @@ const Favorites = () => {
         <Button>Back</Button>
       </Link>
       <HeroesContainer>
-        {myFavoritesHeroes &&
-          myFavoritesHeroes.map((hero) => (
+        {favorites &&
+          favorites.map((hero) => (
             <Wrapper key={hero.id}>
               <h1>{hero.name}</h1>
               <img

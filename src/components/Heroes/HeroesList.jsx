@@ -29,13 +29,12 @@ const HeroesList = ({ list, addHeroToFavorites, favoritesList }) => {
           });
           return (
             <Wrapper key={hero.id}>
-              <HeroItem hero={hero} isFavorite={isFavorite} />
-              <Button
-                style={{ width: "150px" }}
-                onClick={() => addHeroToFavorites(hero)}
-              >
-                {isFavorite ? "REMOVE FAVORITE" : "ADD FAVORITE"}
-              </Button>
+              <HeroItem
+                hero={hero}
+                isFavorite={isFavorite}
+                addToFavorite={() => addHeroToFavorites(hero)}
+                removeFromFavorite={() => addHeroToFavorites(hero)}
+              />
             </Wrapper>
           );
         })}
