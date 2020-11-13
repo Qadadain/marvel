@@ -2,10 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 import HeroItem from "./HeroItem";
-import Button from "../style/Button";
 
-const HeroesContainer = styled.div`
-  margin-top: 10px;
+const HeroesListContainer = styled.div`
+  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -22,7 +21,7 @@ const Wrapper = styled.div`
 const HeroesList = ({ list, addHeroToFavorites, favoritesList }) => {
   return (
     <>
-      <HeroesContainer>
+      <HeroesListContainer>
         {list.map((hero) => {
           const isFavorite = favoritesList.some((favorite) => {
             return favorite.id === hero.id;
@@ -38,7 +37,7 @@ const HeroesList = ({ list, addHeroToFavorites, favoritesList }) => {
             </Wrapper>
           );
         })}
-      </HeroesContainer>
+      </HeroesListContainer>
     </>
   );
 };

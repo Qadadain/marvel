@@ -13,9 +13,11 @@ import {
 import Button from "../style/Button";
 
 import banner from "../assets/img/marvel-banner.png";
-import { Link } from "react-router-dom";
+
 import getApiUrl from "../../utils/getApiUrl";
 import getInitialFavorites from "../../utils/getInitialFavorites";
+import ClickUnavailable from "../style/ClickUnavailable";
+import LinkButton from "../style/LinkButton";
 
 const Banner = styled.div`
   display: flex;
@@ -27,24 +29,6 @@ const Buttons = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 15px;
-`;
-
-const StyledLink = styled(Link)`
-  background-color: #ee171f;
-  color: white;
-  outline: none;
-  padding: 10px 20px;
-  font-size: 20px;
-  font-weight: 900;
-  z-index: 3;
-  border: none;
-  text-decoration: none;
-  cursor: pointer;
-  &:hover {
-    color: #ee171f;
-    background-color: white;
-    transition: 350ms all;
-  }
 `;
 
 const Home = () => {
@@ -92,6 +76,9 @@ const Home = () => {
     }
   };
 
+  const noFavoriteHero = () =>
+    alert("It Seems you don't have any favorite Heroes yet!");
+
   return (
     <>
       <Banner>
@@ -101,8 +88,14 @@ const Home = () => {
         placeholder={SEARCHBAR_PLACEHOLDER}
         submitSearchValue={setSearchValue}
       />
+      {favorites.length ? (
+        <LinkButton to="/favorites">My Favorites</LinkButton>
+      ) : (
+        <ClickUnavailable onClick={noFavoriteHero}>
+          My Favorites
+        </ClickUnavailable>
+      )}
 
-      <StyledLink to="/favorites">My Favorites</StyledLink>
       {!searchValue && (
         <Buttons>
           {currentOffSet !== 0 && (

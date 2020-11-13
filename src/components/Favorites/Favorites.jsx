@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { getHeroImage, isHeroDescriptionAvailable } from "../../utils/hero";
-import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
 import { Link } from "react-router-dom";
 import Button from "../style/Button";
 import styled from "styled-components";
 import getInitialFavorites from "../../utils/getInitialFavorites";
+import HeroItem from "../Heroes/HeroItem";
 
 const HeroesContainer = styled.div`
   margin-top: 10px;
@@ -14,43 +13,48 @@ const HeroesContainer = styled.div`
   color: white;
 `;
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 1px solid red;
-  align-items: center;
-  width: 300px;
-`;
+// const Wrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   border: 1px solid red;
+//   align-items: center;
+//   width: 300px;
+// `;
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState(getInitialFavorites());
 
   useEffect(() => {
-    const myFavoritesHeroes = JSON.parse(
-      localStorage.getItem("addToFavoritesHeroes")
-    );
-    setFavorites(myFavoritesHeroes);
+    localStorage.setItem("addToFavoritesHeroes", JSON.stringify(favorites));
   }, [favorites]);
 
   console.log("favorite", favorites);
+
+  const removeFromFavorite = (hero) => {
+    const newFavorite = favorites.filter((favorite) => hero.id !== favorite.id);
+    setFavorites(newFavorite);
+  };
+
+  const removeAllFavorite = () => {
+    const newFavorite = [];
+    setFavorites(newFavorite);
+  };
 
   return (
     <>
       <Link to="/home">
         <Button>Back</Button>
       </Link>
+      <Button onClick={() => removeAllFavorite()}>REMOVE FAVORITE</Button>
+
       <HeroesContainer>
         {favorites &&
           favorites.map((hero) => (
-            <Wrapper key={hero.id}>
-              <h1>{hero.name}</h1>
-              <img
-                src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)}
-                alt="images"
-              />
-              <p>{isHeroDescriptionAvailable(hero)}</p>
-              <p>{hero.modified}</p>
-            </Wrapper>
+            <HeroItem
+              hero={hero}
+              isFavorite
+              removeFromFavorite={() => removeFromFavorite(hero)}
+            />
           ))}
       </HeroesContainer>
     </>

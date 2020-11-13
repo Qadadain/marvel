@@ -17,7 +17,7 @@
 <!-- //* - J'ajoute des hero en favoris -->
 <!-- //* 6 - J'ai une page de mes héros favoris -->
 
-    //Supprimer tous les favoris d'un coup ou un par un
+<!-- //*Supprimer tous les favoris d'un coup ou un par un -->
     //Si aucun favoris, bouton griser mes favoris
 
     // Faire la page détail
