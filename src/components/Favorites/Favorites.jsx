@@ -7,11 +7,13 @@ import HeroItem from "../Heroes/HeroItem";
 import getInitialFavorites from "../../utils/getInitialFavorites";
 
 import Button from "../style/Button";
+import Banner from "../style/Banner";
+
+import bannerImg from "../assets/img/marvel-banner.png";
 
 const HeroesContainer = styled.div`
   margin-top: 10px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   color: white;
 `;
@@ -37,6 +39,9 @@ const Favorites = () => {
 
   return (
     <>
+      <Banner>
+        <img src={bannerImg} alt="logo" />
+      </Banner>
       <Link to="/home">
         <Button>Back</Button>
       </Link>

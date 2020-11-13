@@ -17,14 +17,10 @@ import getInitialFavorites from "../../utils/getInitialFavorites";
 import ClickUnavailable from "../style/ClickUnavailable";
 import LinkButton from "../style/LinkButton";
 import Button from "../style/Button";
+import Banner from "../style/Banner";
 
-import banner from "../assets/img/marvel-banner.png";
+import bannerImg from "../assets/img/marvel-banner.png";
 
-const Banner = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const Buttons = styled.div`
   display: flex;
   justify-content: center;
@@ -83,7 +79,7 @@ const Home = () => {
   return (
     <>
       <Banner>
-        <img src={banner} alt="logo" />
+        <img src={bannerImg} alt="logo" />
       </Banner>
       <SearchBar
         placeholder={SEARCHBAR_PLACEHOLDER}
