@@ -1,13 +1,13 @@
 import React from "react";
+
 import styled from "styled-components";
-
-import { getHeroImage } from "../../utils/hero";
-
-import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as fasFaHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as falFaHeart } from "@fortawesome/free-regular-svg-icons";
+
+import { getHeroImage } from "../../utils/hero";
+import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
+
 import LinkButton from "../style/LinkButton";
 import HeroItemContainer from "../style/HeroItemContainer";
 

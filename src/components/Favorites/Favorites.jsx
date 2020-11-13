@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Button from "../style/Button";
 import styled from "styled-components";
-import getInitialFavorites from "../../utils/getInitialFavorites";
+
 import HeroItem from "../Heroes/HeroItem";
+
+import getInitialFavorites from "../../utils/getInitialFavorites";
+
+import Button from "../style/Button";
 
 const HeroesContainer = styled.div`
   margin-top: 10px;
@@ -12,14 +15,6 @@ const HeroesContainer = styled.div`
   justify-content: center;
   color: white;
 `;
-
-// const Wrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   border: 1px solid red;
-//   align-items: center;
-//   width: 300px;
-// `;
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState(getInitialFavorites());

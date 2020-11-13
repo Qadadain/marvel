@@ -10,14 +10,15 @@ import {
   SEARCHBAR_PLACEHOLDER,
   NUMBER_OF_HERO_PER_PAGE_TO_DISPLAY,
 } from "../../constants";
-import Button from "../style/Button";
-
-import banner from "../assets/img/marvel-banner.png";
 
 import getApiUrl from "../../utils/getApiUrl";
 import getInitialFavorites from "../../utils/getInitialFavorites";
+
 import ClickUnavailable from "../style/ClickUnavailable";
 import LinkButton from "../style/LinkButton";
+import Button from "../style/Button";
+
+import banner from "../assets/img/marvel-banner.png";
 
 const Banner = styled.div`
   display: flex;
@@ -89,10 +90,10 @@ const Home = () => {
         submitSearchValue={setSearchValue}
       />
       {favorites.length ? (
-        <LinkButton to="/favorites">My Favorites</LinkButton>
+        <LinkButton to="/favorites">MY FAVORITES</LinkButton>
       ) : (
         <ClickUnavailable onClick={noFavoriteHero}>
-          My Favorites
+          MY FAVORITES
         </ClickUnavailable>
       )}
 
