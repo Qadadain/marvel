@@ -18,11 +18,13 @@
 <!-- //* 6 - J'ai une page de mes héros favoris -->
 
 <!-- //*Supprimer tous les favoris d'un coup ou un par un -->
-    //Si aucun favoris, bouton griser mes favoris
+<!-- //*Si aucun favoris, bouton griser mes favoris -->
 
-    // Faire la page détail
+<!-- //TODO Faire la page détail -->
 
 // 7 - Le logo devient un composant header
-// 8 - Je clean mon code en essayant de le rentre plus optimisé
-// 9 - Je travail la mise en forme de ma liste de héro pour avoir un truc stylé
+
+<!-- //? 8 - Je clean mon code en essayant de le rentre plus optimisé -->
+<!-- //* 9 - Je travail la mise en forme de ma liste de héro pour avoir un truc stylé -->
+
 // 10 - Je fais le même exercice avec les GIF

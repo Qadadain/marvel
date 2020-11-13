@@ -7,12 +7,13 @@ import Loading from "../Loading/Loading";
 
 import { getHeroImage, isHeroDescriptionAvailable } from "../../utils/hero";
 import { HERO_IMAGE_FORMAT_BIG, API_KEY, API_URL } from "../../constants";
-import getApiUrlHeroDetails from "../../utils/getApiUrlHeroDetails";
 
 import Button from "../style/Button";
 import Banner from "../style/Banner";
 
 import bannerImg from "../assets/img/marvel-banner.png";
+import Series from "./Details/Series";
+import Comics from "./Details/Comics";
 
 const HeroDetailsContainer = styled.div`
   display: flex;
@@ -43,23 +44,12 @@ const HeroItemDetails = styled.div`
 
 const HeroDetails = (props) => {
   const [hero, setHero] = useState(null);
-  const [comics, setComics] = useState([]);
-  const [series, setSeries] = useState([]);
-  const [stories, setStories] = useState([]);
-
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const id = props.match.params.id;
-    // const comics = "comics";
-    // const stories = "stories";
-    // const series = "series";
-    // const apiUrl = getApiUrlHeroDetails(id);
-    // // const apiUrl = getApiUrlHeroDetails(id, comics, stories, series);
     const apiUrlDefault = `${API_URL}/${id}?&apikey=${API_KEY}`;
-    const apiUrlComics = `${API_URL}/${id}/comics?&apikey=${API_KEY}`;
-    const apiUrlSeries = `${API_URL}/${id}/series?&apikey=${API_KEY}`;
-    const apiUrlStories = `${API_URL}/${id}/stories?&apikey=${API_KEY}`;
+    // const apiUrlStories = `${API_URL}/${id}/stories?&apikey=${API_KEY}`;
 
     setLoading(true);
 
@@ -74,44 +64,18 @@ const HeroDetails = (props) => {
       .finally(() => {
         setLoading(false);
       });
-    Axios.get(apiUrlComics)
-      .then((response) => response.data.data.results)
-      .then((data) => {
-        setComics(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-    Axios.get(apiUrlSeries)
-      .then((response) => response.data.data.results)
-      .then((data) => {
-        setSeries(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-    Axios.get(apiUrlStories)
-      .then((response) => response.data.data.results)
-      .then((data) => {
-        setStories(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    // Axios.get(apiUrlStories)
+    //   .then((response) => response.data.data.results)
+    //   .then((data) => {
+    //     setStories(data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   }, [props.match.params.id]);
-
-  console.log("series", series);
-  console.log("stories", stories);
-  console.log("comics", comics);
 
   return (
     <>
@@ -129,8 +93,8 @@ const HeroDetails = (props) => {
                   src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)}
                   alt="images"
                 />
-                <p>{isHeroDescriptionAvailable(hero)}</p>
-                <p>{hero.modified}</p>
+                {isHeroDescriptionAvailable(hero)}
+                {hero.modified}
               </HeroItemDetails>
             </HeroDetailsContainer>
 
@@ -138,33 +102,10 @@ const HeroDetails = (props) => {
               <Button>BACK</Button>
             </Link>
           </Wrapper>
-          {series.map((serie) => (
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
-              <p>
-                {serie.comics.items.map((title) => (
-                  <div style={{ color: "white" }}>{title.name}</div>
-                ))}
-              </p>
-              <img
-                src={`${serie.thumbnail.path}.${serie.thumbnail.extension}`}
-                alt="img"
-              />
-            </div>
-          ))}
-
-          {comics.map((comic) => (
-            <div style={{ color: "white", display: "flex", flexWrap: "wrap" }}>
-              {comic.description}
-              {comic.images.map((img) => (
-                <div style={{ display: "flex", flexWrap: "wrap" }}>
-                  <img src={`${img.path}.${img.extension}`} alt="img" />
-                </div>
-              ))}
-              {comic.prices.map((price) => (
-                <div>{price.price} $</div>
-              ))}
-            </div>
-          ))}
+          <h1 style={{ color: "red" }}>SERIES</h1>
+          <Series id={props.match.params.id} />
+          <h1 style={{ color: "red" }}>COMICS</h1>
+          <Comics id={props.match.params.id} />
         </>
       )}
     </>
