@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import debounce from "lodash/debounce";
 
-import SearchButton from "../../Button";
+import Button from "../style/Button";
 
 const WrapperSearchBar = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const InputSearch = styled.input`
@@ -35,16 +37,15 @@ const SearchBar = ({ placeholder, submitSearchValue }) => {
               1000
             );
             debouncedSubmit();
-            // submitSearchValue(e.target.value);
           }}
         />
-        <SearchButton
+        <Button
           onClick={() => {
             submitSearchValue(searchValue);
           }}
         >
           SEARCH
-        </SearchButton>
+        </Button>
       </WrapperSearchBar>
     </>
   );

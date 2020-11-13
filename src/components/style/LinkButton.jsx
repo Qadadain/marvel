@@ -1,15 +1,18 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const SearchButton = styled.button`
+const LinkButton = styled(Link)`
   background-color: #ee171f;
+  margin-right: 60px;
   color: white;
   outline: none;
-  padding: 10px 20px;
+  padding: 16px 20px;
   font-size: 20px;
   font-weight: 900;
   font-size: 16px;
-  z-index: 3;
+  z-index: 5;
   border: none;
+  text-decoration: none;
   cursor: pointer;
   &:hover {
     color: #ee171f;
@@ -18,4 +21,4 @@ const SearchButton = styled.button`
   }
 `;
 
-export default SearchButton;
+export default LinkButton;

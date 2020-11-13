@@ -2,94 +2,117 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import styled from "styled-components";
 
-import ClipLoader from "react-spinners/ClipLoader";
-
-import { API_URL, API_KEY } from "../../constants";
-
-import SearchBar from "./SearchBar/SearchBar";
+import SearchBar from "../SearchBar/SearchBar";
 import HeroesList from "../Heroes/HeroesList";
+import Loading from "../Loading/Loading";
+
+import {
+  SEARCHBAR_PLACEHOLDER,
+  NUMBER_OF_HERO_PER_PAGE_TO_DISPLAY,
+} from "../../constants";
+
+import getApiUrl from "../../utils/getApiUrl";
+import getInitialFavorites from "../../utils/getInitialFavorites";
+
+import ClickUnavailable from "../style/ClickUnavailable";
+import LinkButton from "../style/LinkButton";
+import Button from "../style/Button";
 
 import banner from "../assets/img/marvel-banner.png";
 
-const BannerContainer = styled.div`
+const Banner = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
-const SearchBarContainer = styled.div`
+const Buttons = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 15px;
 `;
-const Loading = styled.div`
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-`;
-
-const SEARCHBAR_PLACEHOLDER = "Search from Marvel Universe...";
 
 const Home = () => {
   const [isLoading, setLoading] = useState(false);
   const [heroesList, setHeroesList] = useState([]);
-  const [filteredHeroes, setFilteredHeroes] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [currentOffSet, setCurrentOffset] = useState(0);
+  const [favorites, setFavorites] = useState(getInitialFavorites());
 
   useEffect(() => {
-    const urlWithAllHeroes = `${API_URL}?&apikey=${API_KEY}`;
-    const urlSearchByHeroName = `${API_URL}?nameStartsWith=${searchValue}&apikey=${API_KEY}`;
-
     setLoading(true);
 
-    if (searchValue.length) {
-      Axios.get(urlSearchByHeroName)
-        .then((response) => response.data.data.results)
-        .then((data) => {
-          setFilteredHeroes(data);
-          setLoading(false);
-        });
+    const apiUrl = getApiUrl(searchValue, currentOffSet);
+
+    Axios.get(apiUrl)
+      .then((response) => response.data.data.results)
+      .then((data) => {
+        setHeroesList(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [searchValue, currentOffSet]);
+
+  useEffect(() => {
+    localStorage.setItem("addToFavoritesHeroes", JSON.stringify(favorites));
+  }, [favorites]);
+
+  const handleNextClick = () =>
+    setCurrentOffset(currentOffSet + NUMBER_OF_HERO_PER_PAGE_TO_DISPLAY);
+  const handlePreviousClick = () =>
+    setCurrentOffset(currentOffSet - NUMBER_OF_HERO_PER_PAGE_TO_DISPLAY);
+
+  const toggleFavoriteHero = (hero) => {
+    if (!favorites.some((favoriteHero) => favoriteHero.id === hero.id)) {
+      setFavorites([...favorites, hero]);
     } else {
-      setFilteredHeroes([]); //--> j'ai écris ça ici pour pouvoir revenir sur la liste de base si la barre de recherche est vide et qu'on appuie sur search
-      Axios.get(urlWithAllHeroes)
-        .then((response) => response.data.data.results)
-        .then((data) => {
-          setHeroesList(data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const newFavorites = favorites.filter(
+        (favorite) => favorite.id !== hero.id
+      );
+      setFavorites(newFavorites);
     }
-  }, [searchValue]);
+  };
+
+  const noFavoriteHero = () =>
+    alert("It Seems you don't have any favorite Heroes yet!");
 
   return (
     <>
-      <BannerContainer>
+      <Banner>
         <img src={banner} alt="logo" />
-      </BannerContainer>
-      <SearchBarContainer>
-        <SearchBar
-          placeholder={SEARCHBAR_PLACEHOLDER}
-          submitSearchValue={(value) => setSearchValue(value)}
-        />
-      </SearchBarContainer>
-
-      {isLoading && (
-        <>
-          <Loading>
-            <ClipLoader size={100} color={"#ee171f"} />
-          </Loading>
-          <Loading>Loading...</Loading>
-        </>
+      </Banner>
+      <SearchBar
+        placeholder={SEARCHBAR_PLACEHOLDER}
+        submitSearchValue={setSearchValue}
+      />
+      {favorites.length ? (
+        <LinkButton to="/favorites">MY FAVORITES</LinkButton>
+      ) : (
+        <ClickUnavailable onClick={noFavoriteHero}>
+          MY FAVORITES
+        </ClickUnavailable>
       )}
 
-      {!isLoading && filteredHeroes.length > 0 ? (
-        <HeroesList list={filteredHeroes} />
-      ) : (
-        !isLoading &&
-        filteredHeroes.length === 0 && <HeroesList list={heroesList} />
+      {!searchValue && (
+        <Buttons>
+          {currentOffSet !== 0 && (
+            <Button onClick={handlePreviousClick}>BACK</Button>
+          )}
+          <Button onClick={handleNextClick}>NEXT</Button>
+        </Buttons>
+      )}
+
+      {isLoading && <Loading />}
+      {!isLoading && (
+        <HeroesList
+          list={heroesList}
+          addHeroToFavorites={toggleFavoriteHero}
+          favoritesList={favorites}
+        />
       )}
     </>
   );

@@ -1,75 +1,62 @@
 import React from "react";
+
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as fasFaHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as falFaHeart } from "@fortawesome/free-regular-svg-icons";
+
 import { getHeroImage } from "../../utils/hero";
 import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
 
-const TooltipText = styled.div`
+import LinkButton from "../style/LinkButton";
+import HeroItemContainer from "../style/HeroItemContainer";
+
+const Text = styled.div`
   color: #fff;
-  width: 200px;
   text-align: center;
   line-height: 44px;
   font-weight: bold;
-  cursor: pointer;
-`;
-const TooltipBox = styled.div`
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 30px;
-  visibility: hidden;
-  color: transparent;
-  background-color: #ee171f;
-  width: 150px;
-  padding: 5px 5px;
-  border-radius: 4px;
-  transition: visibility 0.5s, color 0.5s, background-color 0.5s, width 0.5s,
-    padding 0.5s ease-in-out;
-  &:before {
-    content: "";
-    width: 0;
-    height: 0;
-    left: 140px;
-    top: -10px;
-    position: absolute;
-    border: 10px solid transparent;
-    transform: rotate(135deg);
-    transition: border 0.3s ease-in-out;
-  }
-`;
-const HeroContainer = styled.div`
-  margin-top: 5px;
-  border: 2px solid blue;
-  color: white;
-  width: 250px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-left: 33px;
-  margin-right: 5px;
-  margin-bottom: 10px;
-  height: 400px;
-  cursor: pointer;
-  position: relative;
-  & ${TooltipText}:hover + ${TooltipBox} {
-    visibility: visible;
-    color: #fff;
-    background-color: #ee171f;
-    width: 200px;
-    padding: 8px 8px;
-    &:before {
-      border-color: transparent transparent #ee171f #ee171f;
-    }
-  }
+  text-decoration: none;
 `;
 
-const Hero = ({ hero, onClick }) => {
+const LikeContainer = styled.div`
+  display: flex;
+  margin-left: 120px;
+  position: absolute;
+  margin-top: 325px;
+  z-index: 5;
+`;
+
+const HeroItem = ({ hero, isFavorite, addToFavorite, removeFromFavorite }) => {
+  const heroFirstName = hero.name.split(" ");
   return (
-    <HeroContainer key={hero.id} onClick={onClick}>
-      <TooltipText>{hero.name}</TooltipText>
-      <TooltipBox>{hero.description}</TooltipBox>
-      <img src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)} alt="images" />
-    </HeroContainer>
+    <HeroItemContainer key={hero.id}>
+      <LikeContainer>
+        {isFavorite ? (
+          <FontAwesomeIcon
+            style={{ color: "red", fontSize: "30px", cursor: "pointer" }}
+            icon={fasFaHeart}
+            onClick={() => removeFromFavorite(hero)}
+          />
+        ) : (
+          <FontAwesomeIcon
+            icon={falFaHeart}
+            style={{ fontSize: "30px", cursor: "pointer" }}
+            onClick={() => addToFavorite(hero)}
+          />
+        )}
+      </LikeContainer>
+      <Text>
+        <h2>{heroFirstName[0]}</h2>
+      </Text>
+      <img
+        src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)}
+        alt="images"
+        style={{ marginBottom: "15px" }}
+      />
+      <LinkButton to={`/hero/${hero.id}`}>MORE</LinkButton>
+    </HeroItemContainer>
   );
 };
 
-export default Hero;
+export default HeroItem;

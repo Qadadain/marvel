@@ -49,7 +49,6 @@ const LogoText = styled.p`
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: white;
-
   &:focus,
   &:hover,
   &:visited,
