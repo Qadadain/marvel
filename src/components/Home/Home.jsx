@@ -111,6 +111,7 @@ const Home = () => {
           list={heroesList}
           addHeroToFavorites={toggleFavoriteHero}
           favoritesList={favorites}
+          searchValue={searchValue}
         />
       )}
       {!searchValue && (
