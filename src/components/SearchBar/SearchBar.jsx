@@ -13,7 +13,7 @@ const WrapperSearchBar = styled.div`
 const InputSearch = styled.input`
   background-color: white;
   outline: none;
-  height: 30px;
+  height: 50px;
   width: 500px;
   padding: 10px 20px;
   border: none;
@@ -22,12 +22,21 @@ const InputSearch = styled.input`
 
 const SearchBar = ({ placeholder, submitSearchValue }) => {
   const [searchValue, setSearchValue] = useState("");
+  const [url, setUrl] = useState("");
 
+  const handleChangeUrl = (e) => {
+    const inputValueToUrl = `?search=${e.target.value}`;
+    const encodeURL = encodeURIComponent(inputValueToUrl);
+    // setUrl(encodeURL);};
+  };
+
+  console.log(url);
   return (
     <>
       <WrapperSearchBar>
+        {url}
         <InputSearch
-          type="text"
+          type="search"
           placeholder={placeholder}
           value={searchValue}
           onChange={(e) => {
@@ -37,6 +46,7 @@ const SearchBar = ({ placeholder, submitSearchValue }) => {
               1000
             );
             debouncedSubmit();
+            handleChangeUrl(e);
           }}
         />
         <Button
