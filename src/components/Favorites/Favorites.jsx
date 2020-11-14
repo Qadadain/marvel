@@ -20,6 +20,10 @@ const HeroesContainer = styled.div`
   color: white;
 `;
 
+const Span = styled.span`
+  color: #ee171f;
+`;
+
 const Favorites = () => {
   const [favorites, setFavorites] = useState(getInitialFavorites());
 
@@ -50,8 +54,21 @@ const Favorites = () => {
           <Button onClick={() => removeAllFavorite()}>REMOVE ALL</Button>
         )}
       </Wrapper>
-
+      <Wrapper style={{ color: "white" }}>
+        {favorites.length === 1 && (
+          <h3>
+            You have <Span>{favorites.length}</Span> Favorite Hero !
+          </h3>
+        )}
+        {favorites.length > 1 && (
+          <h3>
+            You have <Span>{favorites.length}</Span> Favorites Heroes !
+          </h3>
+        )}
+      </Wrapper>
       <HeroesContainer>
+        {favorites.length === 0 && <h1>No Favorites Heroes ! Add Some...</h1>}
+
         {favorites &&
           favorites.map((hero) => (
             <HeroItem
@@ -61,7 +78,6 @@ const Favorites = () => {
               removeFromFavorite={() => removeFromFavorite(hero)}
             />
           ))}
-        {favorites.length === 0 && <h1>No Favorites Heroes !</h1>}
       </HeroesContainer>
     </>
   );
