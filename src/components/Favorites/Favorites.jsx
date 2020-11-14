@@ -44,7 +44,7 @@ const Favorites = () => {
       </Banner>
       <Wrapper>
         <Link to="/home">
-          <Button>Back</Button>
+          <Button>BACK</Button>
         </Link>
         {favorites.length !== 0 && (
           <Button onClick={() => removeAllFavorite()}>REMOVE ALL</Button>

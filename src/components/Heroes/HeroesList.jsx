@@ -23,6 +23,7 @@ const HeroesList = ({ list, addHeroToFavorites, favoritesList }) => {
   return (
     <>
       <HeroesListContainer>
+        {list.length === 0 && <h1 style={{ color: "white" }}>NO HERO FOUND</h1>}
         {list.map((hero) => {
           const isFavorite = favoritesList.some((favorite) => {
             return favorite.id === hero.id;
