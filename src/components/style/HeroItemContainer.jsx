@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const HeroItemContainer = styled.div`
   margin-top: 5px;
-  width: 300px;
+  width: 400px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -34,7 +34,7 @@ const HeroItemContainer = styled.div`
   }
   &:hover:before {
     height: 400px;
-    width: 300px;
+    width: 400px;
     border: 2px solid #ee171f;
     border-right: none;
     border-bottom: none;
@@ -42,7 +42,7 @@ const HeroItemContainer = styled.div`
   }
   &:hover:after {
     height: 400px;
-    width: 300px;
+    width: 400px;
     border: 2px solid #ee171f;
     border-left: none;
     border-top: none;

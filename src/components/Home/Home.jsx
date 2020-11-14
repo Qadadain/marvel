@@ -15,21 +15,28 @@ import getApiUrl from "../../utils/getApiUrl";
 import getInitialFavorites from "../../utils/getInitialFavorites";
 
 import ClickUnavailable from "../style/ClickUnavailable";
-import LinkButton from "../style/LinkButton";
-import Button from "../style/Button";
+import Banner from "../style/Banner";
+import LinkToFavorite from "../style/LinkToFavorite";
+import ButtonNextAndPrevious from "../style/ButtonNextAndPrevious";
+import Wrapper from "../style/Wrapper";
 
-import banner from "../assets/img/marvel-banner.png";
+import bannerImg from "../assets/img/marvel-banner.png";
 
-const Banner = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const Buttons = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  align-content: center;
+  width: 300px;
+`;
+const ButtonFavorite = styled.div`
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 15px;
+  margin-top: 25px;
+  margin-bottom: 10px;
 `;
 
 const Home = () => {
@@ -83,29 +90,21 @@ const Home = () => {
   return (
     <>
       <Banner>
-        <img src={banner} alt="logo" />
+        <img src={bannerImg} alt="logo" />
       </Banner>
       <SearchBar
         placeholder={SEARCHBAR_PLACEHOLDER}
         submitSearchValue={setSearchValue}
       />
-      {favorites.length ? (
-        <LinkButton to="/favorites">MY FAVORITES</LinkButton>
-      ) : (
-        <ClickUnavailable onClick={noFavoriteHero}>
-          MY FAVORITES
-        </ClickUnavailable>
-      )}
-
-      {!searchValue && (
-        <Buttons>
-          {currentOffSet !== 0 && (
-            <Button onClick={handlePreviousClick}>BACK</Button>
-          )}
-          <Button onClick={handleNextClick}>NEXT</Button>
-        </Buttons>
-      )}
-
+      <ButtonFavorite>
+        {favorites.length ? (
+          <LinkToFavorite to="/favorites">FAVORITES</LinkToFavorite>
+        ) : (
+          <ClickUnavailable onClick={noFavoriteHero}>
+            FAVORITES
+          </ClickUnavailable>
+        )}
+      </ButtonFavorite>
       {isLoading && <Loading />}
       {!isLoading && (
         <HeroesList
@@ -113,6 +112,20 @@ const Home = () => {
           addHeroToFavorites={toggleFavoriteHero}
           favoritesList={favorites}
         />
+      )}
+      {!searchValue && (
+        <Wrapper>
+          <Buttons>
+            {currentOffSet !== 0 && (
+              <ButtonNextAndPrevious onClick={handlePreviousClick}>
+                BACK
+              </ButtonNextAndPrevious>
+            )}
+            <ButtonNextAndPrevious onClick={handleNextClick}>
+              NEXT
+            </ButtonNextAndPrevious>
+          </Buttons>
+        </Wrapper>
       )}
     </>
   );

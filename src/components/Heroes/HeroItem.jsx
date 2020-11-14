@@ -14,9 +14,10 @@ import HeroItemContainer from "../style/HeroItemContainer";
 const Text = styled.div`
   color: #fff;
   text-align: center;
-  line-height: 44px;
+  margin-bottom: 15px;
   font-weight: bold;
   text-decoration: none;
+  text-decoration: underline #ee171f;
 `;
 
 const LikeContainer = styled.div`
@@ -28,7 +29,7 @@ const LikeContainer = styled.div`
 `;
 
 const HeroItem = ({ hero, isFavorite, addToFavorite, removeFromFavorite }) => {
-  const heroFirstName = hero.name.split(" ");
+  const heroFirstName = hero.name;
   return (
     <HeroItemContainer key={hero.id}>
       <LikeContainer>
@@ -47,7 +48,7 @@ const HeroItem = ({ hero, isFavorite, addToFavorite, removeFromFavorite }) => {
         )}
       </LikeContainer>
       <Text>
-        <h2>{heroFirstName[0]}</h2>
+        <h2>{heroFirstName}</h2>
       </Text>
       <img
         src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)}

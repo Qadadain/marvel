@@ -6,16 +6,38 @@ import styled from "styled-components";
 import Loading from "../Loading/Loading";
 
 import { getHeroImage, isHeroDescriptionAvailable } from "../../utils/hero";
-import { API_URL, API_KEY } from "../../constants";
-import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
+import { HERO_IMAGE_FORMAT_BIG, API_KEY, API_URL } from "../../constants";
 
 import Button from "../style/Button";
+import Banner from "../style/Banner";
+
+import bannerImg from "../assets/img/marvel-banner.png";
+import Series from "./Details/Series";
+import Comics from "./Details/Comics";
 
 const HeroDetailsContainer = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   color: white;
   margin-bottom: 50px;
+  width: 600px;
+`;
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  margin-bottom: 50px;
+  flex-direction: column;
+`;
+const HeroItemDetails = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  flex-direction: column;
 `;
 
 const HeroDetails = (props) => {
@@ -24,11 +46,11 @@ const HeroDetails = (props) => {
 
   useEffect(() => {
     const id = props.match.params.id;
-    const urlWithHeroId = `${API_URL}/${id}?&apikey=${API_KEY}`;
+    const apiUrlDefault = `${API_URL}/${id}?&apikey=${API_KEY}`;
 
     setLoading(true);
 
-    Axios.get(urlWithHeroId)
+    Axios.get(apiUrlDefault)
       .then((response) => response.data.data.results)
       .then((data) => {
         setHero(data[0]);
@@ -43,23 +65,31 @@ const HeroDetails = (props) => {
 
   return (
     <>
+      <Banner>
+        <img src={bannerImg} alt="logo" />
+      </Banner>
       {isLoading && <Loading />}
       {!isLoading && hero && (
         <>
-          <HeroDetailsContainer>
-            <div key={hero.id}>
-              <h1>{hero.name}</h1>
-              <p>{isHeroDescriptionAvailable(hero)}</p>
-              <p>{hero.modified}</p>
-              <img
-                src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)}
-                alt="images"
-              />
-            </div>
-          </HeroDetailsContainer>
-          <Link to="/home">
-            <Button>BACK</Button>
-          </Link>
+          <Wrapper>
+            <Link to="/home">
+              <Button>BACK</Button>
+            </Link>
+            <HeroDetailsContainer>
+              <HeroItemDetails key={hero.id}>
+                <h1>{hero.name}</h1>
+                <img
+                  src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)}
+                  alt="images"
+                />
+                {isHeroDescriptionAvailable(hero)}
+              </HeroItemDetails>
+            </HeroDetailsContainer>
+          </Wrapper>
+
+          <Series id={props.match.params.id} />
+
+          <Comics id={props.match.params.id} />
         </>
       )}
     </>
