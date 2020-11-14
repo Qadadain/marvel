@@ -19,9 +19,22 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const HeroesList = ({ list, addHeroToFavorites, favoritesList }) => {
+const HeroesList = ({
+  list,
+  addHeroToFavorites,
+  favoritesList,
+  searchValue,
+}) => {
   return (
     <>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {list.length === 1 && searchValue && (
+          <p style={{ color: "white" }}>{list.length} Hero found</p>
+        )}
+        {list.length > 1 && searchValue && (
+          <p style={{ color: "white" }}>{list.length} Heroes found</p>
+        )}
+      </div>
       <HeroesListContainer>
         {list.length === 0 && <h1 style={{ color: "white" }}>NO HERO FOUND</h1>}
         {list.map((hero) => {
