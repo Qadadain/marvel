@@ -22,7 +22,6 @@ const HeroDetailsContainer = styled.div`
   flex-direction: column;
   color: white;
   margin-bottom: 50px;
-  border: 1px solid green;
   width: 600px;
 `;
 const Wrapper = styled.div`
@@ -31,7 +30,6 @@ const Wrapper = styled.div`
   align-items: center;
   color: white;
   margin-bottom: 50px;
-  border: 1px solid purple;
   flex-direction: column;
 `;
 const HeroItemDetails = styled.div`
@@ -49,7 +47,6 @@ const HeroDetails = (props) => {
   useEffect(() => {
     const id = props.match.params.id;
     const apiUrlDefault = `${API_URL}/${id}?&apikey=${API_KEY}`;
-    // const apiUrlStories = `${API_URL}/${id}/stories?&apikey=${API_KEY}`;
 
     setLoading(true);
 
@@ -64,17 +61,6 @@ const HeroDetails = (props) => {
       .finally(() => {
         setLoading(false);
       });
-    // Axios.get(apiUrlStories)
-    //   .then((response) => response.data.data.results)
-    //   .then((data) => {
-    //     setStories(data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   }, [props.match.params.id]);
 
   return (
@@ -86,6 +72,9 @@ const HeroDetails = (props) => {
       {!isLoading && hero && (
         <>
           <Wrapper>
+            <Link to="/home">
+              <Button>BACK</Button>
+            </Link>
             <HeroDetailsContainer>
               <HeroItemDetails key={hero.id}>
                 <h1>{hero.name}</h1>
@@ -94,17 +83,12 @@ const HeroDetails = (props) => {
                   alt="images"
                 />
                 {isHeroDescriptionAvailable(hero)}
-                {hero.modified}
               </HeroItemDetails>
             </HeroDetailsContainer>
-
-            <Link to="/home">
-              <Button>BACK</Button>
-            </Link>
           </Wrapper>
-          <h1 style={{ color: "red" }}>SERIES</h1>
+
           <Series id={props.match.params.id} />
-          <h1 style={{ color: "red" }}>COMICS</h1>
+
           <Comics id={props.match.params.id} />
         </>
       )}

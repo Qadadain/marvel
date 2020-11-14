@@ -6,11 +6,11 @@ import Loading from "../../Loading/Loading";
 
 import { API_KEY, API_URL } from "../../../constants";
 
+import Title from "../../style/Title";
+
 const ComicsContainer = styled.div`
-  border: 1px solid purple;
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
   flex-direction: unset;
   flex-wrap: wrap;
 `;
@@ -19,13 +19,11 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   color: white;
-  flex-direction: row-reverse;
-  border: 1px solid green;
+  flex-direction: column;
   margin-bottom: 20px;
   width: 650px;
 `;
 const TextDescription = styled.div`
-  border: 1px solid yellow;
   font-size: 18px;
   font-weight: bold;
 `;
@@ -54,6 +52,7 @@ const Comics = ({ id }) => {
 
   return (
     <>
+      <Title>COMICS</Title>
       {isLoading && <Loading />}
       {!isLoading && comics && (
         <ComicsContainer>
@@ -66,7 +65,7 @@ const Comics = ({ id }) => {
                   display: "flex",
                   flexWrap: "wrap",
                   width: "100%",
-                  //   justifyContent: "space-evenly",
+                  justifyContent: "space-evenly",
                 }}
               >
                 {comic.images.map((img, index) => (

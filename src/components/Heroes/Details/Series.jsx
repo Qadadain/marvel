@@ -6,12 +6,13 @@ import Loading from "../../Loading/Loading";
 
 import { API_KEY, API_URL } from "../../../constants";
 
+import Title from "../../style/Title";
+
 const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  flex-direction: column;
-  color: white;
+  flex-wrap: wrap;
 `;
 
 const Series = ({ id }) => {
@@ -41,15 +42,11 @@ const Series = ({ id }) => {
       {isLoading && <Loading />}
       {!isLoading && series && (
         <>
-          {series.map((serie, index) => (
-            <Wrapper key={index}>
-              {serie.comics.items.map((title, index) => (
-                <div key={index} style={{ color: "white" }}>
-                  {title.name}
-                </div>
-              ))}
-
+          <Title>SERIES</Title>
+          <Wrapper>
+            {series.map((serie, index) => (
               <img
+                key={index}
                 src={`${serie.thumbnail.path}.${serie.thumbnail.extension}`}
                 alt="img"
                 style={{
@@ -57,8 +54,8 @@ const Series = ({ id }) => {
                   height: "500px",
                 }}
               />
-            </Wrapper>
-          ))}
+            ))}
+          </Wrapper>
         </>
       )}
     </>

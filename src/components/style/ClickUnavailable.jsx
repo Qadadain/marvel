@@ -5,7 +5,7 @@ const ClickUnavailable = styled.button`
   color: white;
   outline: none;
   padding: 16px 20px;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 900;
   font-size: 16px;
   z-index: 3;

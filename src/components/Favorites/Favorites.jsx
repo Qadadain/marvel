@@ -8,6 +8,7 @@ import getInitialFavorites from "../../utils/getInitialFavorites";
 
 import Button from "../style/Button";
 import Banner from "../style/Banner";
+import Wrapper from "../style/Wrapper";
 
 import bannerImg from "../assets/img/marvel-banner.png";
 
@@ -15,6 +16,7 @@ const HeroesContainer = styled.div`
   margin-top: 10px;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   color: white;
 `;
 
@@ -24,8 +26,6 @@ const Favorites = () => {
   useEffect(() => {
     localStorage.setItem("addToFavoritesHeroes", JSON.stringify(favorites));
   }, [favorites]);
-
-  console.log("favorite", favorites);
 
   const removeFromFavorite = (hero) => {
     const newFavorite = favorites.filter((favorite) => hero.id !== favorite.id);
@@ -42,20 +42,26 @@ const Favorites = () => {
       <Banner>
         <img src={bannerImg} alt="logo" />
       </Banner>
-      <Link to="/home">
-        <Button>Back</Button>
-      </Link>
-      <Button onClick={() => removeAllFavorite()}>REMOVE FAVORITE</Button>
+      <Wrapper>
+        <Link to="/home">
+          <Button>Back</Button>
+        </Link>
+        {favorites.length !== 0 && (
+          <Button onClick={() => removeAllFavorite()}>REMOVE ALL</Button>
+        )}
+      </Wrapper>
 
       <HeroesContainer>
         {favorites &&
           favorites.map((hero) => (
             <HeroItem
+              key={hero.id}
               hero={hero}
               isFavorite
               removeFromFavorite={() => removeFromFavorite(hero)}
             />
           ))}
+        {favorites.length === 0 && <h1>No Favorites Heroes !</h1>}
       </HeroesContainer>
     </>
   );
