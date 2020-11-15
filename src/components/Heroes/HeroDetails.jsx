@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Loading from "../Loading/Loading";
 
 import { getHeroImage, isHeroDescriptionAvailable } from "../../utils/hero";
-import { HERO_IMAGE_FORMAT_BIG, API_KEY, API_URL } from "../../constants";
+import { HERO_IMAGE_FORMAT_BIG, API_KEY, API_URL, BACK } from "../../constants";
 
 import Button from "../style/Button";
 import Banner from "../style/Banner";
@@ -73,7 +73,7 @@ const HeroDetails = (props) => {
         <>
           <Wrapper>
             <Link to="/home">
-              <Button>BACK</Button>
+              <Button>{BACK}</Button>
             </Link>
             <HeroDetailsContainer>
               <HeroItemDetails key={hero.id}>

@@ -1,6 +1,11 @@
 import React from "react";
 
 import styled from "styled-components";
+import {
+  MULTIPLE_HEROES_FOUND,
+  NO_HERO_FOUND,
+  ONE_HERO_FOUND,
+} from "../../constants";
 
 import HeroItem from "./HeroItem";
 
@@ -9,6 +14,7 @@ const HeroesListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  color: white;
 `;
 
 const Wrapper = styled.div`
@@ -19,6 +25,12 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
+const Text = styled.div`
+  display: flex;
+  justify-content: center;
+  color: white;
+`;
+
 const HeroesList = ({
   list,
   addHeroToFavorites,
@@ -27,16 +39,20 @@ const HeroesList = ({
 }) => {
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <Text>
         {list.length === 1 && searchValue && (
-          <p style={{ color: "white" }}>{list.length} Hero found</p>
+          <p>
+            {list.length} {ONE_HERO_FOUND}
+          </p>
         )}
         {list.length > 1 && searchValue && (
-          <p style={{ color: "white" }}>{list.length} Heroes found</p>
+          <p>
+            {list.length} {MULTIPLE_HEROES_FOUND}
+          </p>
         )}
-      </div>
+      </Text>
       <HeroesListContainer>
-        {list.length === 0 && <h1 style={{ color: "white" }}>NO HERO FOUND</h1>}
+        {list.length === 0 && <h1>{NO_HERO_FOUND}</h1>}
         {list.map((hero) => {
           const isFavorite = favoritesList.some((favorite) => {
             return favorite.id === hero.id;

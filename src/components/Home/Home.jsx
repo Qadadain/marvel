@@ -9,6 +9,9 @@ import Loading from "../Loading/Loading";
 import {
   SEARCHBAR_PLACEHOLDER,
   NUMBER_OF_HERO_PER_PAGE_TO_DISPLAY,
+  FAVORITES,
+  BACK,
+  NEXT,
 } from "../../constants";
 
 import getApiUrl from "../../utils/getApiUrl";
@@ -98,10 +101,10 @@ const Home = () => {
       />
       <ButtonFavorite>
         {favorites.length ? (
-          <LinkToFavorite to="/favorites">FAVORITES</LinkToFavorite>
+          <LinkToFavorite to="/favorites">{FAVORITES}</LinkToFavorite>
         ) : (
           <ClickUnavailable onClick={noFavoriteHero}>
-            FAVORITES
+            {FAVORITES}
           </ClickUnavailable>
         )}
       </ButtonFavorite>
@@ -119,11 +122,11 @@ const Home = () => {
           <Buttons>
             {currentOffSet !== 0 && (
               <ButtonNextAndPrevious onClick={handlePreviousClick}>
-                BACK
+                {BACK}
               </ButtonNextAndPrevious>
             )}
             <ButtonNextAndPrevious onClick={handleNextClick}>
-              NEXT
+              {NEXT}
             </ButtonNextAndPrevious>
           </Buttons>
         </Wrapper>
