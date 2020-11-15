@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { LANDING_TEXT } from "../../constants";
+
 const Body = styled.div`
   background-color: black;
   height: 100%;
@@ -62,7 +64,7 @@ const Landing = () => {
   return (
     <Body>
       <LogoText>
-        <StyledLink to="/home">MARVEL</StyledLink>
+        <StyledLink to="/home">{LANDING_TEXT}</StyledLink>
       </LogoText>
     </Body>
   );

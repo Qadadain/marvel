@@ -60,7 +60,7 @@ const Comics = ({ id }) => {
             <Wrapper key={index}>
               <TextDescription>{comic.description}</TextDescription>
               <div
-                className="test3"
+                className="Wrapper-Img"
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
@@ -69,22 +69,20 @@ const Comics = ({ id }) => {
                 }}
               >
                 {comic.images.map((img, index) => (
-                  <div className="test2" key={index}>
-                    <div className="test">
-                      <img
-                        src={`${img.path}.${img.extension}`}
-                        alt="img"
-                        style={{
-                          width: "400px",
-                          height: "500px",
-                        }}
-                      />
-                      {comic.prices.map((price, index) => (
-                        <div style={{ color: "red" }} key={index}>
-                          Price : {price.price} $
-                        </div>
-                      ))}
-                    </div>
+                  <div className="img" key={index}>
+                    <img
+                      src={`${img.path}.${img.extension}`}
+                      alt="img"
+                      style={{
+                        width: "400px",
+                        height: "500px",
+                      }}
+                    />
+                    {comic.prices.map((price, index) => (
+                      <div style={{ color: "red" }} key={index}>
+                        Price : {price.price} $
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>
