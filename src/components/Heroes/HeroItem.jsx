@@ -6,7 +6,7 @@ import { faHeart as fasFaHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as falFaHeart } from "@fortawesome/free-regular-svg-icons";
 
 import { getHeroImage } from "../../utils/hero";
-import { HERO_IMAGE_FORMAT_BIG } from "../../constants";
+import { HERO_IMAGE_FORMAT_BIG, MORE } from "../../constants";
 
 import LinkButton from "../style/LinkButton";
 import HeroItemContainer from "../style/HeroItemContainer";
@@ -29,7 +29,6 @@ const LikeContainer = styled.div`
 `;
 
 const HeroItem = ({ hero, isFavorite, addToFavorite, removeFromFavorite }) => {
-  const heroFirstName = hero.name;
   return (
     <HeroItemContainer key={hero.id}>
       <LikeContainer>
@@ -48,14 +47,14 @@ const HeroItem = ({ hero, isFavorite, addToFavorite, removeFromFavorite }) => {
         )}
       </LikeContainer>
       <Text>
-        <h2>{heroFirstName}</h2>
+        <h2>{hero.name}</h2>
       </Text>
       <img
         src={getHeroImage(hero, HERO_IMAGE_FORMAT_BIG)}
         alt="images"
         style={{ marginBottom: "15px" }}
       />
-      <LinkButton to={`/hero/${hero.id}`}>MORE</LinkButton>
+      <LinkButton to={`/hero/${hero.id}`}>{MORE}</LinkButton>
     </HeroItemContainer>
   );
 };

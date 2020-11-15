@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import debounce from "lodash/debounce";
 
-const WrapperSearchBar = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import Wrapper from "../style/Wrapper";
 
 const InputSearch = styled.input`
   background-color: white;
@@ -20,17 +16,10 @@ const InputSearch = styled.input`
 
 const SearchBar = ({ placeholder, submitSearchValue }) => {
   const [searchValue, setSearchValue] = useState("");
-  // const [url, setUrl] = useState("");
-
-  // const handleChangeUrl = (e) => {
-  //   const inputValueToUrl = `?search=${e.target.value}`;
-  //   const encodeURL = encodeURIComponent(inputValueToUrl);
-  //   // setUrl(encodeURL);};
-  // };
 
   return (
     <>
-      <WrapperSearchBar>
+      <Wrapper>
         <InputSearch
           type="search"
           placeholder={placeholder}
@@ -42,10 +31,9 @@ const SearchBar = ({ placeholder, submitSearchValue }) => {
               1000
             );
             debouncedSubmit();
-            // handleChangeUrl(e);
           }}
         />
-      </WrapperSearchBar>
+      </Wrapper>
     </>
   );
 };

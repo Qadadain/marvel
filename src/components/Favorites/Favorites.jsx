@@ -11,6 +11,14 @@ import Banner from "../style/Banner";
 import Wrapper from "../style/Wrapper";
 
 import bannerImg from "../assets/img/marvel-banner.png";
+import {
+  BACK,
+  FAVORITE_HERO,
+  FAVORITES_HEROES,
+  NO_FAVORITE_HERO,
+  REMOVE_ALL_HEROES_FROM_FAVORITE,
+  YOU_HAVE,
+} from "../../constants";
 
 const HeroesContainer = styled.div`
   margin-top: 10px;
@@ -48,26 +56,28 @@ const Favorites = () => {
       </Banner>
       <Wrapper>
         <Link to="/home">
-          <Button>BACK</Button>
+          <Button>{BACK}</Button>
         </Link>
         {favorites.length !== 0 && (
-          <Button onClick={() => removeAllFavorite()}>REMOVE ALL</Button>
+          <Button onClick={() => removeAllFavorite()}>
+            {REMOVE_ALL_HEROES_FROM_FAVORITE}
+          </Button>
         )}
       </Wrapper>
       <Wrapper style={{ color: "white" }}>
         {favorites.length === 1 && (
           <h3>
-            You have <Span>{favorites.length}</Span> Favorite Hero !
+            {YOU_HAVE} <Span>{favorites.length}</Span> {FAVORITE_HERO}
           </h3>
         )}
         {favorites.length > 1 && (
           <h3>
-            You have <Span>{favorites.length}</Span> Favorites Heroes !
+            {YOU_HAVE} <Span>{favorites.length}</Span> {FAVORITES_HEROES}
           </h3>
         )}
       </Wrapper>
       <HeroesContainer>
-        {favorites.length === 0 && <h1>No Favorites Heroes ! Add Some...</h1>}
+        {favorites.length === 0 && <h1>{NO_FAVORITE_HERO}</h1>}
 
         {favorites &&
           favorites.map((hero) => (
