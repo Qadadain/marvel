@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import Axios from "axios";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react"
+import Axios from "axios"
+import { Link } from "react-router-dom"
+import styled from "styled-components"
 
-import Loading from "../Loading/Loading";
+import Loading from "../Loading/Loading"
 
-import { getHeroImage, isHeroDescriptionAvailable } from "../../utils/hero";
-import { HERO_IMAGE_FORMAT_BIG, API_KEY, API_URL, BACK } from "../../constants";
+import { getHeroImage, isHeroDescriptionAvailable } from "../../utils/hero"
+import { HERO_IMAGE_FORMAT_BIG, API_KEY, API_URL, BACK } from "../../constants"
 
-import Button from "../style/Button";
-import Banner from "../style/Banner";
+import Button from "../style/Button"
+import Banner from "../style/Banner"
 
-import bannerImg from "../assets/img/marvel-banner.png";
-import Series from "./Details/Series";
-import Comics from "./Details/Comics";
+import bannerImg from "../assets/img/marvel-banner.png"
+import Series from "./Details/Series"
+import Comics from "./Details/Comics"
 
 const HeroDetailsContainer = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const HeroDetailsContainer = styled.div`
   color: white;
   margin-bottom: 50px;
   width: 600px;
-`;
+`
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -31,37 +31,37 @@ const Wrapper = styled.div`
   color: white;
   margin-bottom: 50px;
   flex-direction: column;
-`;
+`
 const HeroItemDetails = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
   flex-direction: column;
-`;
+`
 
 const HeroDetails = (props) => {
-  const [hero, setHero] = useState(null);
-  const [isLoading, setLoading] = useState(true);
+  const [hero, setHero] = useState(null)
+  const [isLoading, setLoading] = useState(true)
+  const id = props.match.params.id
 
   useEffect(() => {
-    const id = props.match.params.id;
-    const apiUrlDefault = `${API_URL}/${id}?&apikey=${API_KEY}`;
+    const apiUrlDefault = `${API_URL}/${id}?&apikey=${API_KEY}`
 
-    setLoading(true);
+    setLoading(true)
 
     Axios.get(apiUrlDefault)
       .then((response) => response.data.data.results)
       .then((data) => {
-        setHero(data[0]);
+        setHero(data[0])
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err)
       })
       .finally(() => {
-        setLoading(false);
-      });
-  }, [props.match.params.id]);
+        setLoading(false)
+      })
+  }, [id])
 
   return (
     <>
@@ -93,7 +93,7 @@ const HeroDetails = (props) => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default HeroDetails;
+export default HeroDetails

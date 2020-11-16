@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import debounce from "lodash/debounce";
+import React, { useState } from "react"
+import styled from "styled-components"
+import debounce from "lodash/debounce"
 
-import Wrapper from "../style/Wrapper";
+import Wrapper from "../style/Wrapper"
 
 const InputSearch = styled.input`
   background-color: white;
@@ -12,10 +12,10 @@ const InputSearch = styled.input`
   padding: 10px 20px;
   border: none;
   font-size: 16px;
-`;
+`
 
-const SearchBar = ({ placeholder, submitSearchValue }) => {
-  const [searchValue, setSearchValue] = useState("");
+const SearchBar = ({ placeholder, submitSearchValue, initialValue }) => {
+  const [searchValue, setSearchValue] = useState(initialValue)
 
   return (
     <>
@@ -25,17 +25,17 @@ const SearchBar = ({ placeholder, submitSearchValue }) => {
           placeholder={placeholder}
           value={searchValue}
           onChange={(e) => {
-            setSearchValue(e.target.value);
+            setSearchValue(e.target.value)
             const debouncedSubmit = debounce(
               () => submitSearchValue(e.target.value),
               1000
-            );
-            debouncedSubmit();
+            )
+            debouncedSubmit()
           }}
         />
       </Wrapper>
     </>
-  );
-};
+  )
+}
 
-export default SearchBar;
+export default SearchBar

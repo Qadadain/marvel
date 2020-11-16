@@ -1,13 +1,13 @@
-import React from "react";
+import React from "react"
 
-import styled from "styled-components";
+import styled from "styled-components"
 import {
   MULTIPLE_HEROES_FOUND,
   NO_HERO_FOUND,
   ONE_HERO_FOUND,
-} from "../../constants";
+} from "../../constants"
 
-import HeroItem from "./HeroItem";
+import HeroItem from "./HeroItem"
 
 const HeroesListContainer = styled.div`
   margin-top: 20px;
@@ -15,7 +15,7 @@ const HeroesListContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   color: white;
-`;
+`
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,13 +23,13 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-content: center;
   align-items: center;
-`;
+`
 
 const Text = styled.div`
   display: flex;
   justify-content: center;
   color: white;
-`;
+`
 
 const HeroesList = ({
   list,
@@ -39,24 +39,26 @@ const HeroesList = ({
 }) => {
   return (
     <>
-      <Text>
-        {list.length === 1 && searchValue && (
-          <p>
-            {list.length} {ONE_HERO_FOUND}
-          </p>
-        )}
-        {list.length > 1 && searchValue && (
-          <p>
-            {list.length} {MULTIPLE_HEROES_FOUND}
-          </p>
-        )}
-      </Text>
+      {searchValue && (
+        <Text>
+          {list.length === 1 && (
+            <p>
+              {list.length} {ONE_HERO_FOUND}
+            </p>
+          )}
+          {list.length > 1 && (
+            <p>
+              {list.length} {MULTIPLE_HEROES_FOUND}
+            </p>
+          )}
+        </Text>
+      )}
       <HeroesListContainer>
         {list.length === 0 && <h1>{NO_HERO_FOUND}</h1>}
         {list.map((hero) => {
           const isFavorite = favoritesList.some((favorite) => {
-            return favorite.id === hero.id;
-          });
+            return favorite.id === hero.id
+          })
           return (
             <Wrapper key={hero.id}>
               <HeroItem
@@ -66,11 +68,11 @@ const HeroesList = ({
                 removeFromFavorite={() => addHeroToFavorites(hero)}
               />
             </Wrapper>
-          );
+          )
         })}
       </HeroesListContainer>
     </>
-  );
-};
+  )
+}
 
-export default HeroesList;
+export default HeroesList
