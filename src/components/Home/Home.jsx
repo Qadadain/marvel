@@ -53,13 +53,12 @@ const Home = (props) => {
 
   useEffect(() => {
     const searchParams = new URL(window.location.href).searchParams;
-    searchParams
-      .set("search", searchValue)
+    searchParams.set("search", searchValue);
 
-      .props.history.replace({
-        pathname: props.location.pathname,
-        searh: searchParams.toString(),
-      });
+    props.history.replace({
+      pathname: props.location.pathname,
+      search: searchParams.toString(),
+    });
 
     setLoading(true);
 
