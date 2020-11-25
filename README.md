@@ -18,7 +18,8 @@ And it's responsive
 
 - The app list all the heroes afrom the Marvel API
 - The user can search heroes using the searchbar
-- The user can add or remove heroes to his favorites
+- The user and copy/paste the url from search
+- The user can add or remove heroes to his favorit
 - His Favorites are saved in LocalStorage
 - Can be use on phone
 
