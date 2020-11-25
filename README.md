@@ -8,7 +8,7 @@ You can test the application [here](https://marvel-api-project.netlify.app)
 
 This Project was created to improve my coding experience with an API.
 
-![](desktop-marvel.gif)
+![](desktop-marvel2.gif)
 
 And it's responsive
 
