@@ -42,8 +42,7 @@ $ npm i
 
 3. You will need to create an api key [here](https://developer.marvel.com/docs) to get access to the API from [MARVEL](https://developer.marvel.com/)
 
-4. Once you have the key, create `.env` file in the root of the project, you should have this :  
-   ![Screenshot](env.png)
+4. Once you have the key, create `.env` file in the root of the project.
 
 5. Open the `.env` file and add your key after : `REACT_APP_MARVEL_API_KEY`.  
    You should have something like : `REACT_APP_MARVEL_API_KEY=zda5451515az14e5569`.
