@@ -14,8 +14,8 @@ const InputSearch = styled.input`
   font-size: 16px;
 `;
 
-const SearchBar = ({ placeholder, submitSearchValue }) => {
-  const [searchValue, setSearchValue] = useState("");
+const SearchBar = ({ placeholder, submitSearchValue, initialValue }) => {
+  const [searchValue, setSearchValue] = useState(initialValue);
 
   return (
     <>

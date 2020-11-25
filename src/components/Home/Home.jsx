@@ -42,14 +42,24 @@ const ButtonFavorite = styled.div`
   margin-bottom: 10px;
 `;
 
-const Home = () => {
+const Home = (props) => {
   const [isLoading, setLoading] = useState(false);
   const [heroesList, setHeroesList] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState(
+    props.location.search.replace("?search=", "")
+  );
   const [currentOffSet, setCurrentOffset] = useState(0);
   const [favorites, setFavorites] = useState(getInitialFavorites());
 
   useEffect(() => {
+    const searchParams = new URL(window.location.href).searchParams;
+    searchParams.set("search", searchValue);
+
+    props.history.replace({
+      pathname: props.location.pathname,
+      search: searchParams.toString(),
+    });
+
     setLoading(true);
 
     const apiUrl = getApiUrl(searchValue, currentOffSet);
@@ -96,6 +106,7 @@ const Home = () => {
         <img src={bannerImg} alt="logo" />
       </Banner>
       <SearchBar
+        initialValue={searchValue}
         placeholder={SEARCHBAR_PLACEHOLDER}
         submitSearchValue={setSearchValue}
       />
